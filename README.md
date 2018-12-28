@@ -19,7 +19,7 @@ autonomous = np.random.rand()<(success_rate if success_rate>0 else 0.5)
 target_synapse = np.argmin(predictions) if autonomous else count%NUM_SYNAPSES
 
 
-3. before any training, get predictions from operator (binary)
+3. before any training, get predictions from operator (binary). lc_pred proves that the synapse can predict the same result from just the latent map
 
 f_pred = synapses[target_synapse][COMP_OP].predict(train_x)
 
