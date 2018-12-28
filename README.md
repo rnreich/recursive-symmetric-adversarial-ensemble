@@ -13,7 +13,7 @@ When receiving new data, the negotiator (executed code - not a neural network) s
 
 2. Select target synapse (lowest memory error or random)
 
-3. Before any training, get predictions from operator (binary). lc_pred proves that the synapse can predict the same result from the latent map
+3. Before any training, get predictions from operator. lc_pred proves that the synapse can predict the same result from the latent map
 
 4. Encode input and latent collection
 
