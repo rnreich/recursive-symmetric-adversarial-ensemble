@@ -57,6 +57,8 @@ synapses[target_synapse][COMP_OP].fit(x=train_x, y=train_y, epochs=EPOCHS, batch
 
 
 
+
+
 Coded for kaggle's microsoft malware prediction contest:
 
 https://www.kaggle.com/rnreich/recursive-symmetric-adversarial-ensemble-learning
