@@ -25,7 +25,7 @@ COMP_OP = 5
 
 HASH_SIZE = 16 # md5
 DATA_USE_PERCENT = 0.1 # data random skip rate, 0.1 = 1 random item of every 10 data items will be trained
-EPOCHS = 1 # epochs per fit operation
+EPOCHS = 10 # epochs per fit operation
 SAVE_INTERVAL = 1000 # interval for saving component weights
 NUM_SYNAPSES = 16 # <<<<< CUSTOMIZE HERE
 OUT_SIZE = 1 # one per output parameter <<<<< CUSTOMIZE HERE
@@ -128,30 +128,21 @@ with open("train.csv", "r") as csvfile: # <<<<< CUSTOMIZE HERE
             autonomous = np.random.rand()<(success_rate if success_rate>0 else 0.5)
             target_synapse = np.argmin(predictions) if autonomous else count%NUM_SYNAPSES
 
-            pre_pred = np.around(synapses[target_synapse][COMP_OP].predict(train_x)[0][0])
-            # STAGE 1 - train memory
-            #synapses[target_synapse][COMP_MEM].fit(x=biglatent, y=biglatent, epochs=EPOCHS, batch_size=1)
-            synapses[target_synapse][COMP_MEM].fit(x=train_x, y=train_x, epochs=EPOCHS, batch_size=1)
-            # encode input
-            latent = synapses[target_synapse][COMP_ENC].predict(train_x)
-            # encode latent collection
-            enc_biglatent = synapses[target_synapse][COMP_ENC].predict(biglatent)
-            # STAGE 2 - train projector
-            synapses[target_synapse][COMP_PROJ].fit(x=latent, y=[[float(0)]], epochs=EPOCHS, batch_size=1)
-            synapses[target_synapse][COMP_PROJ].fit(x=enc_biglatent, y=[[float(1)]], epochs=EPOCHS, batch_size=1)
-            # STAGE 3 - animate pretender
-            synapses[target_synapse][COMP_PRET].fit(x=train_x, y=[[float(1)]], epochs=EPOCHS, batch_size=1)
-            # before training operator, get predictions from operator (binary)
+            # before any training, get predictions from operator (binary)
             pred = np.around(synapses[target_synapse][COMP_OP].predict(train_x)[0][0])
-            # predict also by latent collection
             lc_pred = np.around(synapses[target_synapse][COMP_OP].predict(biglatent)[0][0])
+            # encode input and latent collection
+            latent = synapses[target_synapse][COMP_ENC].predict(train_x)
+            enc_biglatent = synapses[target_synapse][COMP_ENC].predict(biglatent)
+            # STAGE 1 - train projector
+            synapses[target_synapse][COMP_PROJ].fit(x=latent, y=[[success_rate]], epochs=EPOCHS, batch_size=1, verbose=0)
+            synapses[target_synapse][COMP_PROJ].fit(x=enc_biglatent, y=[[float(1)]], epochs=EPOCHS, batch_size=1, verbose=0)
+            # STAGE 2 - animate pretender
+            synapses[target_synapse][COMP_PRET].fit(x=train_x, y=[[float(1)]], epochs=EPOCHS, batch_size=1, verbose=0)
+            # STAGE 3 - train memory
+            synapses[target_synapse][COMP_MEM].fit(x=train_x, y=train_x, epochs=EPOCHS, batch_size=1, verbose=0)
             # STAGE 4 - train operator
-            synapses[target_synapse][COMP_OP].fit(x=train_x, y=train_y, epochs=EPOCHS, batch_size=1)
-            #synapses[target_synapse][COMP_OP].fit(x=biglatent, y=train_y, epochs=EPOCHS, batch_size=1)
-
-            # just a check if anything changed by the projector
-            if pre_pred!=pred and pred==truth:
-                print("corrected before output")
+            synapses[target_synapse][COMP_OP].fit(x=train_x, y=train_y, epochs=EPOCHS, batch_size=1, verbose=0)
 
             if autonomous: # only count statistics for fully autonomous operations
                 attempts = attempts + 1
@@ -163,8 +154,8 @@ with open("train.csv", "r") as csvfile: # <<<<< CUSTOMIZE HERE
                 lc_success_rate =  lc_successes/attempts
 
             # output some stats
-            print("autonomous", "target_synapse", "truth", "pre_pred", "pred", "lc_pred", "successes", "lc_successes", "attempts", "success_rate", "lc_success_rate", "lowest_mem_err")
-            print(autonomous, target_synapse, truth, pre_pred, pred, lc_pred, successes, lc_successes, attempts, success_rate, lc_success_rate, predictions[target_synapse])
+            print("autonomous", "target_synapse", "truth", "pred", "lc_pred", "successes", "lc_successes", "attempts", "success_rate", "lc_success_rate", "lowest_mem_err")
+            print(autonomous, target_synapse, truth, pred, lc_pred, successes, lc_successes, attempts, success_rate, lc_success_rate, predictions[target_synapse])
 
             # save synapses weights
             if attempts % SAVE_INTERVAL == 0 and attempts>0:
