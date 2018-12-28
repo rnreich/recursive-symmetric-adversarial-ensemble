@@ -20,7 +20,7 @@ COMP_MEM = 0
 COMP_PROJ = 1
 COMP_PRET = 2
 COMP_ENC = 3
-COPM_DEC = 4
+COMP_DEC = 4
 COMP_OP = 5
 
 HASH_SIZE = 16 # md5
@@ -170,7 +170,7 @@ with open("train.csv", "r") as csvfile: # <<<<< CUSTOMIZE HERE
             if attempts % SAVE_INTERVAL == 0:
                 for i in range(0, NUM_SYNAPSES):
                     try:
-                        synapses[i][COPM_MEM].save_weights("weights/"+str(i)+"_mem")
+                        synapses[i][COMP_MEM].save_weights("weights/"+str(i)+"_mem")
                         synapses[i][COMP_PROJ].save_weights("weights/"+str(i)+"_proj")
                         synapses[i][COMP_PRET].save_weights("weights/"+str(i)+"_pret")
                         synapses[i][COMP_ENC].save_weights("weights/"+str(i)+"_enc")
