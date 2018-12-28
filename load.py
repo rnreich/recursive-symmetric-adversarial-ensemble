@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 from keras.layers import Input, Dense
 from keras.models import Sequential, Model
-from keras.optimizers import SGD
+from keras.optimizers import RMSprop
 import datetime
 import sys
 import os
@@ -51,13 +51,13 @@ def create_synapse(): # <<<<< CUSTOMIZE HERE
     projector.add(Dense(SYN_SIZE, input_shape=(LATENT_DIM,), activation='linear'))
     projector.add(Dense(NUM_FLAGS, activation='hard_sigmoid'))
     memory = Model(memory_input, decoder(encoder(memory_input)))
-    memory.compile(optimizer=SGD(), loss="mean_squared_error")
+    memory.compile(optimizer=RMSprop(), loss="mean_squared_error")
     operator = Model(memory_input, task(decoder(encoder(memory_input))))
-    operator.compile(optimizer=SGD(), loss="binary_crossentropy")
-    projector.compile(optimizer=SGD(), loss="binary_crossentropy")
+    operator.compile(optimizer=RMSprop(), loss="binary_crossentropy")
+    projector.compile(optimizer=RMSprop(), loss="binary_crossentropy")
     projector.trainable = False
     pretender = Model(pretender_input, projector(encoder(pretender_input)))
-    pretender.compile(optimizer=SGD(), loss="binary_crossentropy")
+    pretender.compile(optimizer=RMSprop(), loss="binary_crossentropy")
 
     return memory, projector, pretender, encoder, decoder, operator
 
@@ -129,10 +129,10 @@ with open("train.csv", "r") as csvfile: # <<<<< CUSTOMIZE HERE
             target_synapse = np.argmin(predictions) if autonomous else count%NUM_SYNAPSES
 
             # before any training, get predictions from operator (binary)
-            f_pred = synapses[target_synapse][COMP_OP].predict(train_x)[0][0]
-            f_lc_pred = synapses[target_synapse][COMP_OP].predict(biglatent)[0][0]
-            pred = np.around(f_pred)
-            lc_pred = np.around(f_lc_pred)
+            f_pred = synapses[target_synapse][COMP_OP].predict(train_x)
+            f_lc_pred = synapses[target_synapse][COMP_OP].predict(biglatent)
+            pred = np.around(f_pred[0][0])
+            lc_pred = np.around(f_lc_pred[0][0])
             # encode input and latent collection
             latent = synapses[target_synapse][COMP_ENC].predict(train_x)
             enc_biglatent = synapses[target_synapse][COMP_ENC].predict(biglatent)
