@@ -11,9 +11,9 @@ When receiving new data, the negotiator (executed code - not a neural network) s
 
 1. Merge latent vectors to one big memory input
 
-2. Select target synapse (lowest memory error or random, epsilon=success_rate)
+2. Select target synapse (lowest memory error or random)
 
-3. Before any training, get predictions from operator (binary). lc_pred proves that the synapse can predict the same result from just the latent map without ever training on it!
+3. Before any training, get predictions from operator (binary). lc_pred proves that the synapse can predict the same result from the latent map
 
 4. Encode input and latent collection
 
