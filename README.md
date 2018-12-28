@@ -5,57 +5,23 @@ An array of symmetric, extended adversarial autoencoders. Symmetric means that t
 When receiving new data, the negotiator (executed code - not a neural network) selects the unit that has the lowest memory encoding-decoding error (proof of understanding) and trains it (or just make a prediction) using the following sequence of operations:
 
 
-1. merge latent vectors to one big memory input
+1. Merge latent vectors to one big memory input
 
-biglatent = np.array(latents).reshape(SYN_SIZE)
+2. Select target synapse (lowest memory error or random, epsilon=success_rate)
 
-biglatent = np.array([biglatent])
+3. Before any training, get predictions from operator (binary). lc_pred proves that the synapse can predict the same result from just the latent map
 
+4. Encode input and latent collection
 
-2. select target synapse (lowest memory error or random, epsilon=success_rate)
-
-autonomous = np.random.rand()<(success_rate if success_rate>0 else 0.5)
-
-target_synapse = np.argmin(predictions) if autonomous else count%NUM_SYNAPSES
-
-
-3. before any training, get predictions from operator (binary). lc_pred proves that the synapse can predict the same result from just the latent map
-
-f_pred = synapses[target_synapse][COMP_OP].predict(train_x)
-
-f_lc_pred = synapses[target_synapse][COMP_OP].predict(biglatent)
-
-pred = np.around(f_pred[0][0])
-
-lc_pred = np.around(f_lc_pred[0][0])
-
-
-4. encode input and latent collection
-
-latent = synapses[target_synapse][COMP_ENC].predict(train_x)
-
-enc_biglatent = synapses[target_synapse][COMP_ENC].predict(biglatent)
+5. Train components:
 
 STAGE 1 - train projector
 
-synapses[target_synapse][COMP_PROJ].fit(x=latent, y=[[success_rate]], epochs=EPOCHS, batch_size=1, verbose=0)
-
-synapses[target_synapse][COMP_PROJ].fit(x=enc_biglatent, y=[[float(1)]], epochs=EPOCHS, batch_size=1, verbose=0)
-
 STAGE 2 - animate pretender
-
-synapses[target_synapse][COMP_PRET].fit(x=train_x, y=[[float(1)]], epochs=EPOCHS, batch_size=1, verbose=0)
 
 STAGE 3 - train memory
 
-synapses[target_synapse][COMP_MEM].fit(x=train_x, y=train_x, epochs=EPOCHS, batch_size=1, verbose=0)
-
 STAGE 4 - train operator
-
-synapses[target_synapse][COMP_OP].fit(x=train_x, y=train_y, epochs=EPOCHS, batch_size=1, verbose=0)
-
-
-
 
 
 
