@@ -15,13 +15,13 @@ When receiving new data, the negotiator (executed code - not a neural network) s
 
 5. Train components:
 
-STAGE 1 - train projector
+STAGE 1 - Train projector
 
-STAGE 2 - animate pretender
+STAGE 2 - Animate pretender
 
-STAGE 3 - train memory
+STAGE 3 - Train memory
 
-STAGE 4 - train operator
+STAGE 4 - Train operator
 
 
 
