@@ -15,6 +15,7 @@ import os.path
 import csv
 import hashlib
 
+# component enumeration
 COMP_MEM = 0
 COMP_PROJ = 1
 COMP_PRET = 2
