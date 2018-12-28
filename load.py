@@ -1,5 +1,4 @@
 # Recursive-symmetric adversarial ensemble learning - unsafe self-aware generic super AI
-# This is also suited for decentralized architectures... Ask me how!
 
 import numpy as np
 import pandas as pd
