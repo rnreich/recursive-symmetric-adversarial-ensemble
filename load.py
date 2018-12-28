@@ -39,16 +39,16 @@ def create_synapse(): # <<<<< CUSTOMIZE HERE
     memory_input = Input(shape=(SYN_SIZE,))
     pretender_input = Input(shape=(SYN_SIZE,))
     encoder = Sequential()
-    encoder.add(Dense(LATENT_DIM, input_shape=(SYN_SIZE,), activation='relu'))
+    encoder.add(Dense(LATENT_DIM, input_shape=(SYN_SIZE,), activation='linear'))
     encoder.add(Dense(LATENT_DIM, activation=None))
     decoder = Sequential()
-    decoder.add(Dense(LATENT_DIM, input_shape=(LATENT_DIM,), activation='relu'))
+    decoder.add(Dense(LATENT_DIM, input_shape=(LATENT_DIM,), activation='linear'))
     decoder.add(Dense(SYN_SIZE, activation='hard_sigmoid'))
     task = Sequential()
-    task.add(Dense(SYN_SIZE, input_shape=(SYN_SIZE,), activation='relu'))
+    task.add(Dense(SYN_SIZE, input_shape=(SYN_SIZE,), activation='linear'))
     task.add(Dense(OUT_SIZE, activation='hard_sigmoid'))
     projector = Sequential()
-    projector.add(Dense(SYN_SIZE, input_shape=(LATENT_DIM,), activation='relu'))
+    projector.add(Dense(SYN_SIZE, input_shape=(LATENT_DIM,), activation='linear'))
     projector.add(Dense(NUM_FLAGS, activation='hard_sigmoid'))
     memory = Model(memory_input, decoder(encoder(memory_input)))
     memory.compile(optimizer=SGD(), loss="mean_squared_error")
@@ -129,8 +129,10 @@ with open("train.csv", "r") as csvfile: # <<<<< CUSTOMIZE HERE
             target_synapse = np.argmin(predictions) if autonomous else count%NUM_SYNAPSES
 
             # before any training, get predictions from operator (binary)
-            pred = np.around(synapses[target_synapse][COMP_OP].predict(train_x)[0][0])
-            lc_pred = np.around(synapses[target_synapse][COMP_OP].predict(biglatent)[0][0])
+            f_pred = synapses[target_synapse][COMP_OP].predict(train_x)[0][0]
+            f_lc_pred = synapses[target_synapse][COMP_OP].predict(biglatent)[0][0]
+            pred = np.around(f_pred)
+            lc_pred = np.around(f_lc_pred)
             # encode input and latent collection
             latent = synapses[target_synapse][COMP_ENC].predict(train_x)
             enc_biglatent = synapses[target_synapse][COMP_ENC].predict(biglatent)
@@ -155,7 +157,7 @@ with open("train.csv", "r") as csvfile: # <<<<< CUSTOMIZE HERE
 
             # output some stats
             print("autonomous", "target_synapse", "truth", "pred", "lc_pred", "successes", "lc_successes", "attempts", "success_rate", "lc_success_rate", "lowest_mem_err")
-            print(autonomous, target_synapse, truth, pred, lc_pred, successes, lc_successes, attempts, success_rate, lc_success_rate, predictions[target_synapse])
+            print(autonomous, target_synapse, truth, f_pred, f_lc_pred, successes, lc_successes, attempts, success_rate, lc_success_rate, predictions[target_synapse])
 
             # save synapses weights
             if attempts % SAVE_INTERVAL == 0 and attempts>0:
