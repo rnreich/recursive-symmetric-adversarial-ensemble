@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 from keras.layers import Input, Dense
 from keras.models import Sequential, Model
-from keras.optimizers import RMSprop
+from keras.optimizers import SGD
 import datetime
 import sys
 import os
@@ -51,13 +51,13 @@ def create_synapse(): # <<<<< CUSTOMIZE HERE
     projector.add(Dense(SYN_SIZE, input_shape=(LATENT_DIM,), activation='linear'))
     projector.add(Dense(NUM_FLAGS, activation='hard_sigmoid'))
     memory = Model(memory_input, decoder(encoder(memory_input)))
-    memory.compile(optimizer=RMSprop(), loss="mean_squared_error")
+    memory.compile(optimizer=SGD(), loss="mean_squared_error")
     operator = Model(memory_input, task(decoder(encoder(memory_input))))
-    operator.compile(optimizer=RMSprop(), loss="binary_crossentropy")
-    projector.compile(optimizer=RMSprop(), loss="binary_crossentropy")
+    operator.compile(optimizer=SGD(), loss="binary_crossentropy")
+    projector.compile(optimizer=SGD(), loss="binary_crossentropy")
     projector.trainable = False
     pretender = Model(pretender_input, projector(encoder(pretender_input)))
-    pretender.compile(optimizer=RMSprop(), loss="binary_crossentropy")
+    pretender.compile(optimizer=SGD(), loss="binary_crossentropy")
 
     return memory, projector, pretender, encoder, decoder, operator
 
