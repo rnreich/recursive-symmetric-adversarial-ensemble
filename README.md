@@ -13,17 +13,16 @@ When receiving new data, the negotiator (executed code - not a neural network) s
 
 4. Encode input and latent collection
 
-5. Train components:
+5. Train projector
 
-STAGE 1 - Train projector
+6. Animate pretender
 
-STAGE 2 - Animate pretender
+7. Train memory
 
-STAGE 3 - Train memory
-
-STAGE 4 - Train operator
+8. Train operator
 
 
+--------------------------------------------------------------------------------
 
 Coded for kaggle's microsoft malware prediction contest:
 
