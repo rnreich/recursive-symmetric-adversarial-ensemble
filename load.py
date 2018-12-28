@@ -26,11 +26,11 @@ COMP_OP = 5
 HASH_SIZE = 16 # md5
 DATA_USE_PERCENT = 0.1 # data random skip rate, 0.1 = 1 random item of every 10 data items will be trained
 EPOCHS = 1 # epochs per fit operation
-SAVE_INTERVAL = 100 # interval for saving component weights
-NUM_SYNAPSES = 82 # one per input parameter <<<<< CUSTOMIZE HERE
+SAVE_INTERVAL = 1000 # interval for saving component weights
+NUM_SYNAPSES = 16 # <<<<< CUSTOMIZE HERE
 OUT_SIZE = 1 # one per output parameter <<<<< CUSTOMIZE HERE
 NUM_FLAGS = 1 # projector flags
-SYN_SIZE = NUM_SYNAPSES * HASH_SIZE
+SYN_SIZE = 1312
 
 def create_synapse(): # <<<<< CUSTOMIZE HERE
     # so that the collection of all latent spaces together will fit the network's input shapes
@@ -130,7 +130,7 @@ with open("train.csv", "r") as csvfile: # <<<<< CUSTOMIZE HERE
 
             pre_pred = np.around(synapses[target_synapse][COMP_OP].predict(train_x)[0][0])
             # STAGE 1 - train memory
-            synapses[target_synapse][COMP_MEM].fit(x=biglatent, y=biglatent, epochs=EPOCHS, batch_size=1)
+            #synapses[target_synapse][COMP_MEM].fit(x=biglatent, y=biglatent, epochs=EPOCHS, batch_size=1)
             synapses[target_synapse][COMP_MEM].fit(x=train_x, y=train_x, epochs=EPOCHS, batch_size=1)
             # encode input
             latent = synapses[target_synapse][COMP_ENC].predict(train_x)
@@ -147,7 +147,7 @@ with open("train.csv", "r") as csvfile: # <<<<< CUSTOMIZE HERE
             lc_pred = np.around(synapses[target_synapse][COMP_OP].predict(biglatent)[0][0])
             # STAGE 4 - train operator
             synapses[target_synapse][COMP_OP].fit(x=train_x, y=train_y, epochs=EPOCHS, batch_size=1)
-            synapses[target_synapse][COMP_OP].fit(x=biglatent, y=train_y, epochs=EPOCHS, batch_size=1)
+            #synapses[target_synapse][COMP_OP].fit(x=biglatent, y=train_y, epochs=EPOCHS, batch_size=1)
 
             # just a check if anything changed by the projector
             if pre_pred!=pred and pred==truth:
