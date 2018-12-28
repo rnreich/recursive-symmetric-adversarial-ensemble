@@ -167,7 +167,7 @@ with open("train.csv", "r") as csvfile: # <<<<< CUSTOMIZE HERE
             print(autonomous, target_synapse, truth, pre_pred, pred, lc_pred, successes, lc_successes, attempts, success_rate, lc_success_rate, predictions[target_synapse])
 
             # save synapses weights
-            if attempts % SAVE_INTERVAL == 0:
+            if attempts % SAVE_INTERVAL == 0 and attempts>0:
                 for i in range(0, NUM_SYNAPSES):
                     try:
                         synapses[i][COMP_MEM].save_weights("weights/"+str(i)+"_mem")
