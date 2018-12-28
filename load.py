@@ -124,7 +124,7 @@ with open("train.csv", "r") as csvfile: # <<<<< CUSTOMIZE HERE
             biglatent = np.array(latents).reshape(SYN_SIZE)
             biglatent = np.array([biglatent])
             
-            # select target synapse (lowest memory error or random, if success rate = 100% then only by lowest memory error)
+            # select target synapse (lowest memory error or random, epsilon=success_rate)
             autonomous = np.random.rand()<(success_rate if success_rate>0 else 0.5)
             target_synapse = np.argmin(predictions) if autonomous else count%NUM_SYNAPSES
 
