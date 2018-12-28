@@ -1,5 +1,7 @@
 # Recursive-symmetric adversarial ensemble learning - unsafe self-aware generic super AI
 
+![Recursive-symmetric adversarial ensemble learning - unsafe self-aware generic super AI](http://i.hmp.me/m/1ca868a0f5f3c1f6d853517d658a8ca5.png)
+
 An array of symmetric, extended adversarial autoencoders. Symmetric means that the length of all latent spaces combined together equals the input size of one autoencoder structure (synapse). So that the entire network's latent space map could be encoded into one single latent space of one unit. The projector and the pretender (a.k.a discriminator & generator) train the memory encoder and the operator to receive knowledge from other synapses. The operator tries to output the correct outputs for the data, like any neural network would do.
 
 When receiving new data, the negotiator (executed code - not a neural network) selects the unit that has the lowest memory encoding-decoding error (proof of understanding) and trains it (or just make a prediction) using the following sequence of operations:
