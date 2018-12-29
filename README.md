@@ -7,7 +7,7 @@ Usage (tuned version): python3 run_mvproj.py
 - Multivariate arbitrary projector flags
 - Optimized hyperparameters
 - Intuitive learning implemented - the network learns only from its own reactions to the input data without being exposed to it
-- Negotiator cycle improved
+- Real-time negotiator cycle improved
 - Better monitoring
 
 Please read all comments.
