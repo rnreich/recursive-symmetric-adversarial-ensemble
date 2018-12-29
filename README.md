@@ -11,7 +11,7 @@
 - Real-time negotiator cycle improved
 - Better monitoring
 
-Please read all comments.
+Please read all comments. Training is slow before the first save interval.
 
 
 **Usage (basic tutorial): python3 load.py**
