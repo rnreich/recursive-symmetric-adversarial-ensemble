@@ -22,7 +22,7 @@ When receiving an input, the negotiator (executed code - not a neural network) s
         # STAGE 4 - train operator
         synapses[target_synapse][COMP_OP].fit(x=biglatent, y=train_y, epochs=EPOCHS, batch_size=1, verbose=0)
 
-**This is interesting because the network can learn without actually training on any of the input data, only its own reactions to that data!**
+**This is interesting because the network can learn without actually training on any of the input data, only on its own reactions to that data!**
 
 4. Encode the train_x input and the latent map itself
 
