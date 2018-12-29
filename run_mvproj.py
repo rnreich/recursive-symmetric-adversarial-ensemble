@@ -23,11 +23,11 @@ COMP_DEC = 4
 COMP_OP = 5
 
 HASH_SIZE = 16 # md5
-DATA_USE_PERCENT = 1 # data random skip rate, 0.1 = 1 random item of every 10 data items will be trained
+DATA_USE_PERCENT = 0.01 # data random skip rate, 0.1 = 1 random item of every 10 data items will be trained
 EPOCHS = 1 # epochs per fit operation
 SAVE_INTERVAL = 1000 # interval for saving component weights
-NUM_SYNAPSES = 16
 IN_SIZE = 82 # input parameters
+NUM_SYNAPSES = IN_SIZE
 OUT_SIZE = 1 # one per output parameter
 NUM_FLAGS = 5 # projector flags - one per measurement
 SYN_SIZE = HASH_SIZE * IN_SIZE
@@ -42,7 +42,8 @@ def create_synapse():
     encoder.add(Dense(LATENT_DIM, input_shape=(SYN_SIZE,), activation='tanh'))
     # dropout before encoding
     encoder.add(Dropout(1 / NUM_SYNAPSES))
-    encoder.add(Dense(LATENT_DIM, activation=None))
+    # sigmoid as in the output
+    encoder.add(Dense(LATENT_DIM, activation='sigmoid'))
     decoder = Sequential()
     decoder.add(Dense(LATENT_DIM, input_shape=(LATENT_DIM,), activation='tanh'))
     # dropout before decoding
@@ -174,6 +175,7 @@ with open("train.csv", "r") as csvfile:
             lc_success_rate =  lc_successes/attempts
 
             # output some stats
+            print("synapse decoder errors: ", predictions)
             print("autonomous: ", autonomous)
             print("target synapse: ", target_synapse)
             print("truth: ", truth)
