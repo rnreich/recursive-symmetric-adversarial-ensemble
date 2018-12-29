@@ -12,7 +12,7 @@
 - Better monitoring
 - Exploiting the training cycle
 
-Please read all comments. Training is slow before the first save interval.
+Please read all comments. Training is slow before the first save interval. The script is set to use only 1% of the data, so it has to be run at least 100 times in order to achieve respectful results.
 
 
 **Usage (basic tutorial): python3 load.py**
