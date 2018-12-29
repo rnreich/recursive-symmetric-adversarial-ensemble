@@ -35,7 +35,7 @@ When receiving an input, the negotiator (executed code - not a neural network) s
 8. Train operator
 
 
-Note: Model structure, activation functions and other hyper-parameters must be adjusted before using this kernel.
+Note: Activation functions and other hyper-parameters may be adjusted before using this kernel.
 
 --------------------------------------------------------------------------------
 
