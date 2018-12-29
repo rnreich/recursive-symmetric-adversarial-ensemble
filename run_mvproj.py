@@ -96,6 +96,10 @@ success_rate = 0
 lc_successes = 0
 lc_success_rate = 0 
 autonomous = True
+flags = None
+targets = None
+latent = None
+enc_biglatent = None
 
 with open("train.csv", "r") as csvfile: 
     datareader = csv.reader(csvfile)
@@ -135,30 +139,36 @@ with open("train.csv", "r") as csvfile:
             biglatent = np.array(latents).reshape(SYN_SIZE)
             biglatent = np.array([biglatent])
             
-            # before any training, get predictions from operator
+            # projector and pretender are trained as a feedback from previous cycle
+            if attempts>0:
+                # STAGE 1 - train projector
+                synapses[target_synapse][COMP_PROJ].fit(x=latent, y=flags, epochs=EPOCHS, batch_size=1, verbose=0)
+                synapses[target_synapse][COMP_PROJ].fit(x=enc_biglatent, y=targets, epochs=EPOCHS, batch_size=1, verbose=0)
+                # STAGE 2 - animate pretender
+                synapses[target_synapse][COMP_PRET].fit(x=biglatent, y=targets, epochs=EPOCHS, batch_size=1, verbose=0)
+
+            # STAGE 3 - train memory
+            synapses[target_synapse][COMP_MEM].fit(x=biglatent, y=biglatent, epochs=EPOCHS, batch_size=1, verbose=0)
+
+            # before exposing the network to the correct output, get predictions from operator
+            # now it has the adventage of projector/pretender/memory calibration
             f_pred = synapses[target_synapse][COMP_OP].predict(train_x)
             f_lc_pred = synapses[target_synapse][COMP_OP].predict(biglatent)
             pred = np.around(f_pred[0][0])
             lc_pred = np.around(f_lc_pred[0][0])
-            
+
+            # let the projector know how it's currently doing using arbitrary measurements:
+            # decoding error, operator error on data, operator error on latents
+            # overall success rate with data, overall sucess rate with latents
+            # this block must be sent as a feedback for the next training cycle to prevent poisoning
+            flags = np.array([predictions[target_synapse], ((truth-f_pred)**2).mean(), ((truth-f_lc_pred)**2).mean(), success_rate, lc_success_rate])
+            flags = flags.reshape((1,NUM_FLAGS))
+            targets = np.array([float(0),float(0),float(0),float(1),float(1)]).reshape((1,NUM_FLAGS))
             # get target synapse's reaction to the current data - no fitting
             latent = synapses[target_synapse][COMP_ENC].predict(train_x)
             # recursively encoded representation by the target synapse, of all encoded reactions to the current data
             enc_biglatent = synapses[target_synapse][COMP_ENC].predict(biglatent)
 
-            # let the projector know how it's currently doing using arbitrary measurements:
-            # decoding error, operator error on data, operator error on latents
-            # overall success rate with data, overall sucess rate with latents
-            flags = np.array([predictions[target_synapse], ((truth-f_pred)**2).mean(), ((truth-f_lc_pred)**2).mean(), success_rate, lc_success_rate])
-            flags = flags.reshape((1,NUM_FLAGS))
-            targets = np.array([float(0),float(0),float(0),float(1),float(1)]).reshape((1,NUM_FLAGS))
-            # STAGE 1 - train projector
-            synapses[target_synapse][COMP_PROJ].fit(x=latent, y=flags, epochs=EPOCHS, batch_size=1, verbose=0)
-            synapses[target_synapse][COMP_PROJ].fit(x=enc_biglatent, y=targets, epochs=EPOCHS, batch_size=1, verbose=0)
-            # STAGE 2 - animate pretender
-            synapses[target_synapse][COMP_PRET].fit(x=biglatent, y=targets, epochs=EPOCHS, batch_size=1, verbose=0)
-            # STAGE 3 - train memory
-            synapses[target_synapse][COMP_MEM].fit(x=biglatent, y=biglatent, epochs=EPOCHS, batch_size=1, verbose=0)
             # STAGE 4 - train operator
             synapses[target_synapse][COMP_OP].fit(x=biglatent, y=train_y, epochs=EPOCHS, batch_size=1, verbose=0)
 
