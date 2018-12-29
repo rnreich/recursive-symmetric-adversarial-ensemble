@@ -8,9 +8,9 @@
 - Multivariate arbitrary projector flags
 - Optimized hyperparameters
 - Intuitive learning - the network learns only from its own reactions to the input data without being exposed to it
+- Exploiting the training cycle
 - Real-time negotiator cycle improved
 - Better monitoring
-- Exploiting the training cycle
 
 Please read all comments. Training is slow before the first save interval. The script is set to use only 1% of the data, so it has to be run at least 100 times in order to achieve respectful results.
 
