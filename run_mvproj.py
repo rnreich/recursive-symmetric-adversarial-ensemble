@@ -96,10 +96,9 @@ success_rate = 0
 lc_successes = 0
 lc_success_rate = 0 
 autonomous = True
-flags = None
-targets = None
 latent = None
-enc_biglatent = None
+flags = None
+targets = np.array([float(0),float(0),float(0),float(1),float(1)]).reshape((1,NUM_FLAGS))
 
 with open("train.csv", "r") as csvfile: 
     datareader = csv.reader(csvfile)
@@ -138,14 +137,18 @@ with open("train.csv", "r") as csvfile:
             # merge latent vectors to one big memory input
             biglatent = np.array(latents).reshape(SYN_SIZE)
             biglatent = np.array([biglatent])
-            
-            # projector and pretender are trained as a feedback from previous cycle
+            # recursively encoded representation by the target synapse, of all encoded reactions to the current data
+            enc_biglatent = synapses[target_synapse][COMP_ENC].predict(biglatent)
+
+            # STAGE 1 - train projector
+            # projector is trained as a feedback from previous cycle to prevent poisoning by the flags
             if attempts>0:
-                # STAGE 1 - train projector
                 synapses[target_synapse][COMP_PROJ].fit(x=latent, y=flags, epochs=EPOCHS, batch_size=1, verbose=0)
-                synapses[target_synapse][COMP_PROJ].fit(x=enc_biglatent, y=targets, epochs=EPOCHS, batch_size=1, verbose=0)
-                # STAGE 2 - animate pretender
-                synapses[target_synapse][COMP_PRET].fit(x=biglatent, y=targets, epochs=EPOCHS, batch_size=1, verbose=0)
+            # and also in the current cycle
+            synapses[target_synapse][COMP_PROJ].fit(x=enc_biglatent, y=targets, epochs=EPOCHS, batch_size=1, verbose=0)
+
+            # STAGE 2 - animate pretender
+            synapses[target_synapse][COMP_PRET].fit(x=biglatent, y=targets, epochs=EPOCHS, batch_size=1, verbose=0)
 
             # STAGE 3 - train memory
             synapses[target_synapse][COMP_MEM].fit(x=biglatent, y=biglatent, epochs=EPOCHS, batch_size=1, verbose=0)
@@ -163,11 +166,8 @@ with open("train.csv", "r") as csvfile:
             # this block must be sent as a feedback for the next training cycle to prevent poisoning
             flags = np.array([predictions[target_synapse], ((truth-f_pred)**2).mean(), ((truth-f_lc_pred)**2).mean(), success_rate, lc_success_rate])
             flags = flags.reshape((1,NUM_FLAGS))
-            targets = np.array([float(0),float(0),float(0),float(1),float(1)]).reshape((1,NUM_FLAGS))
             # get target synapse's reaction to the current data - no fitting
             latent = synapses[target_synapse][COMP_ENC].predict(train_x)
-            # recursively encoded representation by the target synapse, of all encoded reactions to the current data
-            enc_biglatent = synapses[target_synapse][COMP_ENC].predict(biglatent)
 
             # STAGE 4 - train operator
             synapses[target_synapse][COMP_OP].fit(x=biglatent, y=train_y, epochs=EPOCHS, batch_size=1, verbose=0)
@@ -194,7 +194,7 @@ with open("train.csv", "r") as csvfile:
             print("predicted value for latent collection: ", f_lc_pred)
             print("successes with unseen data: ", successes)
             print("successes with latent collections: ", lc_successes)
-            print("total sessions: ", attempts)
+            print("cycle id: ", attempts)
             print("overall proven success rate (unseen data): ", success_rate)
             print("overall proven success rate (latent collections): ", lc_success_rate)
             print("lowest decoding error (unseen data): ", predictions[target_synapse])
