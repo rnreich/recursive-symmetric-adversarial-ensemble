@@ -1,4 +1,5 @@
-## Recursive-symmetric adversarial ensemble learning - Unsafe, autonomous self-aware generic super artificial intelligence
+## Recursive-symmetric adversarial ensemble learning
+### Unsafe, autonomous self-aware generic super artificial intelligence
 
 ![Recursive-symmetric adversarial ensemble learning - Unsafe, autonomous self-aware generic super artificial intelligence](http://i.hmp.me/m/1ca868a0f5f3c1f6d853517d658a8ca5.png)
 
