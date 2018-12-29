@@ -29,7 +29,7 @@ SAVE_INTERVAL = 1000 # interval for saving component weights
 NUM_SYNAPSES = 16 # <<<<< CUSTOMIZE HERE
 OUT_SIZE = 1 # one per output parameter <<<<< CUSTOMIZE HERE
 NUM_FLAGS = 1 # projector flags
-SYN_SIZE = 1312
+SYN_SIZE = 1312 # HASH_SIZE * number of inputs (82)
 
 def create_synapse(): # <<<<< CUSTOMIZE HERE
     # so that the collection of all latent spaces together will fit the network's input shapes
