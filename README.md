@@ -10,6 +10,7 @@
 - Intuitive learning - the network learns only from its own reactions to the input data without being exposed to it
 - Real-time negotiator cycle improved
 - Better monitoring
+- Exploiting the training cycle
 
 Please read all comments. Training is slow before the first save interval.
 
