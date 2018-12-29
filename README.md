@@ -2,7 +2,18 @@
 
 ![Recursive-symmetric adversarial ensemble learning - Unsafe, autonomous self-aware generic super artificial intelligence](http://i.hmp.me/m/1ca868a0f5f3c1f6d853517d658a8ca5.png)
 
-Usage: python3 load.py
+Usage (tuned version): python3 run_mvproj.py
+
+- Multivariate arbitrary projector flags
+- Optimized hyperparameters
+- Intuitive learning implemented - the network learns only from its own reactions to the input data without being exposed to it
+- Negotiator cycle improved
+- Better monitoring
+
+Please read all comments.
+
+
+Usage (basic tutorial): python3 load.py
 
 An array of symmetric, extended adversarial autoencoders. Symmetric means that the length of all latent spaces combined together equals the input size of one autoencoder structure (synapse). So that the entire network's latent space map could be encoded into one single latent space of one unit. The projector and the pretender (a.k.a discriminator & generator) train the memory encoder and the operator to receive and transmit knowledge to and from other synapses. The operator tries to output the correct outputs for the inputs.
 
