@@ -4,18 +4,27 @@
 
 Usage: python3 load.py
 
-An array of symmetric, extended adversarial autoencoders. Symmetric means that the length of all latent spaces combined together equals the input size of one autoencoder structure (synapse). So that the entire network's latent space map could be encoded into one single latent space of one unit. The projector and the pretender (a.k.a discriminator & generator) train the memory encoder and the operator to receive knowledge from other synapses. The operator tries to output the correct outputs for the data, like any neural network would do.
+An array of symmetric, extended adversarial autoencoders. Symmetric means that the length of all latent spaces combined together equals the input size of one autoencoder structure (synapse). So that the entire network's latent space map could be encoded into one single latent space of one unit. The projector and the pretender (a.k.a discriminator & generator) train the memory encoder and the operator to receive and transmit knowledge to and from other synapses. The operator tries to output the correct outputs for the inputs.
 
-When receiving new data, the negotiator (executed code - not a neural network) selects the unit that has the lowest memory encoding-decoding error (proof of understanding) and trains it (or just make a prediction) using the following sequence of operations:
+When receiving an input, the negotiator (executed code - not a neural network) selects the unit that has the lowest memory decoding error (proof of understanding) and performs the following sequence of operations:
 
 
-1. Merge latent vectors to one big memory input
+1. Merge latent vectors from all synapses to one latent map
 
-2. Select target synapse (lowest memory error or random)
+2. Select target synapse by the lowest memory decoding error of the train_x input (prediction only, no fitting)
 
-3. Before any training, get predictions from operator. lc_pred proves that the synapse can predict the same result from the latent map
+3. Before any fitting, get predictions from operator. lc_pred proves that the synapse can predict the same result from the latent map without ever training on latent maps directly. It's also possible to fit the network ONLY on the latent maps. Just change lines 141-146 to:
 
-4. Encode input and latent collection
+        # STAGE 2 - animate pretender
+        synapses[target_synapse][COMP_PRET].fit(x=biglatent, y=[[float(1)]], epochs=EPOCHS, batch_size=1, verbose=0)
+        # STAGE 3 - train memory
+        synapses[target_synapse][COMP_MEM].fit(x=biglatent, y=biglatent, epochs=EPOCHS, batch_size=1, verbose=0)
+        # STAGE 4 - train operator
+        synapses[target_synapse][COMP_OP].fit(x=biglatent, y=train_y, epochs=EPOCHS, batch_size=1, verbose=0)
+
+**This is interesting because the network can learn without actually training on any of the input data, only its own reactions to that data!**
+
+4. Encode the train_x input and the latent map itself
 
 5. Train projector
 
@@ -25,6 +34,8 @@ When receiving new data, the negotiator (executed code - not a neural network) s
 
 8. Train operator
 
+
+Note: Model structure, activation functions and other hyper-parameters must be adjusted before using this kernel.
 
 --------------------------------------------------------------------------------
 
