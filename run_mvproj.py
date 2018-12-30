@@ -140,18 +140,18 @@ with open("train.csv", "r") as csvfile:
             # recursively encoded representation by the target synapse, of all encoded reactions to the current data
             enc_biglatent = synapses[target_synapse][COMP_ENC].predict(biglatent)
 
-            # STAGE 1 - train projector
+            # STAGE 1 - train memory
+            synapses[target_synapse][COMP_MEM].fit(x=biglatent, y=biglatent, epochs=EPOCHS, batch_size=1, verbose=0)
+
+            # STAGE 2 - train projector
             # projector is trained as a feedback from previous cycle to prevent poisoning by the flags
             if attempts>0:
                 synapses[target_synapse][COMP_PROJ].fit(x=latent, y=flags, epochs=EPOCHS, batch_size=1, verbose=0)
             # and also in the current cycle
             synapses[target_synapse][COMP_PROJ].fit(x=enc_biglatent, y=targets, epochs=EPOCHS, batch_size=1, verbose=0)
 
-            # STAGE 2 - animate pretender
+            # STAGE 3 - animate pretender
             synapses[target_synapse][COMP_PRET].fit(x=biglatent, y=targets, epochs=EPOCHS, batch_size=1, verbose=0)
-
-            # STAGE 3 - train memory
-            synapses[target_synapse][COMP_MEM].fit(x=biglatent, y=biglatent, epochs=EPOCHS, batch_size=1, verbose=0)
 
             # before exposing the network to the correct output, get predictions from operator
             # now it has the adventage of projector/pretender/memory calibration
