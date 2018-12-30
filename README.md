@@ -3,7 +3,7 @@
 
 ![Recursive-symmetric adversarial ensemble learning - Unsafe, autonomous self-aware generic super artificial intelligence](http://i.hmp.me/m/1ca868a0f5f3c1f6d853517d658a8ca5.png)
 
-**Usage (tuned version): python3 run_mvproj.py**
+**Usage (tuned version - stable): python3 run_mvproj.py**
 
 - Multivariate arbitrary projector flags
 - Optimized hyperparameters
