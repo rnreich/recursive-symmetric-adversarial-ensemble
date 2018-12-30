@@ -37,6 +37,8 @@ When receiving an input, the negotiator (executed code - not a neural network) s
 
 **This is interesting because the network can learn without actually training on any of the input data, only on its own reactions to that data!**
 
+It's slightly better to train the memory first, see tuned version.
+
 4. Encode the train_x input and the latent map itself
 
 5. Train projector
