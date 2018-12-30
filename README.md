@@ -14,6 +14,10 @@
 
 Please read all comments. Training is slow before the first save interval. The script is set to use only 1% of the data, so it has to be run at least 100 times in order to achieve respectful results.
 
+Things to think about:
+
+- Set number of projector flags to SYN_SIZE and use it as a communication and action endpoint (interface of the AI), as in deep reinforcement learning, while the "environment" is feeded in real-time into the negotiator input point, which is also compatible with the shape of the projector flags.
+
 
 **Usage (basic tutorial): python3 load.py**
 
