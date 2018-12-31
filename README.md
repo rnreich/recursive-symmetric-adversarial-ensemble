@@ -22,7 +22,7 @@ Things to think about:
 
 - Use various versions of the core synapse model in the same network along with an improved negotiator.
 
-- **Use unlimited number of synapses from more than one machine, each time selecting the required amount of latent spaces required to fit the input size of the network; The selection of synapses (identifiable) may be made by a neural network under the negotiator's domain (which is safe), or by the network itself (which is unsafe), or both.**
+- **Use an unlimited number of synapses from more than one machine, each time selecting the required amount of latent spaces required to fit the input size of the network; The selection of synapses (identifiable) may be made by a neural network under the negotiator's domain (which is safe), or by the network itself (which is unsafe), or both.**
 
 --------------------------------------------------------------------------------
 
