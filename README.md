@@ -16,7 +16,11 @@ Please read all comments. Training is slow before the first save interval. The s
 
 Things to think about:
 
-- Set number of projector flags to SYN_SIZE and use it as a communication and action endpoint (interface of the AI), as in deep reinforcement learning, while the "environment" is feeded in real-time into the negotiator input point, which is also compatible with the shape of the projector flags.
+- Set the number of projector flags to SYN_SIZE and use it as a communication and action endpoint (interface of the AI), as in deep reinforcement learning, while the "environment" is feeded in real-time into the negotiator input point, which is also compatible with the shape of the projector flags.
+
+- Set the number of projector flags to NUM_SYNAPSES and train it to identify itself in a shuffled input of the network's entire latent map.
+
+- Use various versions of the core synapse model in the same network along with an improved negotiator.
 
 - **Use unlimited number of synapses from more than one machine, each time selecting the required amount of latent spaces required to fit the input size of the network; The selection of synapses (identifiable) may be made by a neural network under the negotiator's domain (which is safe), or by the network itself (which is unsafe), or both.**
 
