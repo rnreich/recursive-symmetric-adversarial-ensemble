@@ -18,7 +18,7 @@ Things to think about:
 
 - Set the number of projector flags to SYN_SIZE and use it as a communication and action endpoint (interface of the AI), as in deep reinforcement learning, while the "environment" is feeded in real-time into the negotiator input point, which is also compatible with the shape of the projector flags.
 
-- Set the number of projector flags to NUM_SYNAPSES and train it to identify itself in a shuffled input of the network's entire latent map.
+- Set the number of projector or operator flags to NUM_SYNAPSES and train it to identify itself in a shuffled input of the network's entire latent map.
 
 - Use various versions of the core synapse model in the same network along with an improved negotiator.
 
