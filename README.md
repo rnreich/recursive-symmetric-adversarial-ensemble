@@ -6,10 +6,11 @@
 **Usage (tuned version - indirect neural fitting): python3 run_no_labels.py**
 
 - Not mapping the inputs to any outputs (breakthrough here!)
-- Real time gradient signaling with SGD
+- Real-time gradient signaling with SGD
 - Projectors and pretenders for every layer
 - Differential elements - data vs. latent collections
 - Multiple hacks for learning underlying patterns
+- Softhash function
 
 **Usage (tuned version - multivariate flags): python3 run_mvproj.py**
 
