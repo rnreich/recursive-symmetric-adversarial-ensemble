@@ -12,11 +12,11 @@ Below is a semantic representation of this model, written in IntelliForge syntax
 
 Syntax:
 
--> Data flow
+***-> Data flow***
 
-! Fit operation
+***! Fit operation***
 
-? Predicted data
+***? Predicted data***
 
 --------------------------------------------------------------------------------
 
