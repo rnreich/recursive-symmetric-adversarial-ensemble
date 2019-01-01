@@ -6,6 +6,35 @@
 **Usage (tuned version - indirect neural fitting): python3 run_with_labels.py**
 
 - Adaptation to microsoft's presented problem
+- Enhanced softhash function
+
+Below is a semantic representation of this model, written in IntelliForge syntax, a language that may be used by an adversarial ensemble network to execute dataflow cycles by itself.
+
+Syntax:
+
+-> Data flow
+! Fit operation
+? Predicted data
+
+NEGOTIATOR INPUT ->
+
+SYNAPSE INPUT ->
+
+BIGLATENT -> MEM! -> BIGLATENT
+
+TRAIN_X -> ENC -> PROJ1! -> TARGETS
+TRAIN_X -> ENC -> DEC -> PROJ2! -> TARGETS
+TRAIN_X -> PRET1! -> TARGETS
+TRAIN_X -> ENC -> PRET2! -> TARGETS
+
+TRAIN_X -> OP -> { "title": "Prediction by softhashed data", "data": ? }
+BIGLATENT -> OP -> { "title": "Prediction by latent collection", "data": ? }
+
+TRAIN_X -> ENC -> PROJ1! -> FLAGS
+TRAIN_X -> ENC -> DEC -> PROJ2! -> FLAGS
+BIGLATENT -> OP! -> TRAIN_Y
+
+--------------------------------------------------------------------------------
 
 **Usage (tuned version - indirect neural fitting): python3 run_no_labels.py**
 
@@ -15,6 +44,8 @@
 - Differential elements - data vs. latent collections
 - Multiple hacks for learning underlying patterns
 - SoftHash function
+
+--------------------------------------------------------------------------------
 
 **Usage (unstable - multivariate flags): python3 run_mvproj.py**
 
