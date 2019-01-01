@@ -10,7 +10,7 @@
 - Projectors and pretenders for every layer
 - Differential elements - data vs. latent collections
 - Multiple hacks for learning underlying patterns
-- Softhash function
+- SoftHash function
 
 **Usage (tuned version - multivariate flags): python3 run_mvproj.py**
 
