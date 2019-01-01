@@ -50,9 +50,8 @@ When receiving an input, the negotiator (executed code - not a neural network) s
 
 2. Select target synapse by the lowest memory decoding error of the train_x input (prediction only, no fitting)
 
-3. Before any fitting, get predictions from operator. lc_pred proves that the synapse can predict the same result from the latent map without ever training on latent maps directly. It's also possible to fit the network ONLY on the latent maps. Just change lines 141-146 to:
+3. Before any fitting, get predictions from operator. lc_pred proves that the synapse can predict the same result from the latent map without ever training on latent maps directly. It's also possible to fit the network ONLY on the latent maps. Just change lines 140-144 to:
 
-        # STAGE 2 - animate pretender
         synapses[target_synapse][COMP_PRET].fit(x=biglatent, y=[[float(1)]], epochs=EPOCHS, batch_size=1, verbose=0)
         # STAGE 3 - train memory
         synapses[target_synapse][COMP_MEM].fit(x=biglatent, y=biglatent, epochs=EPOCHS, batch_size=1, verbose=0)
