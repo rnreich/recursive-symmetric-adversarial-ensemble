@@ -1,5 +1,3 @@
-# Recursive-symmetric adversarial ensemble learning - unsafe self-aware generic super AI
-
 import numpy as np
 import pandas as pd
 from keras.layers import Input, Dense
