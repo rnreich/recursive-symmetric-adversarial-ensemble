@@ -18,6 +18,8 @@ Syntax:
 
 ? Predicted data
 
+--------------------------------------------------------------------------------
+
 NEGOTIATOR INPUT ->
 
 SYNAPSE INPUT ->
