@@ -3,6 +3,10 @@
 
 ![Recursive-symmetric adversarial ensemble learning - Unsafe, autonomous self-aware generic super artificial intelligence](http://i.hmp.me/m/1ca868a0f5f3c1f6d853517d658a8ca5.png)
 
+**Usage (tuned version - indirect neural fitting): python3 run_with_labels.py**
+
+- Adaptation to microsoft's presented problem
+
 **Usage (tuned version - indirect neural fitting): python3 run_no_labels.py**
 
 - Not mapping the inputs to any outputs (breakthrough here!)
