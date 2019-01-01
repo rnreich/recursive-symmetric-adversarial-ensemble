@@ -16,7 +16,7 @@
 - Multiple hacks for learning underlying patterns
 - SoftHash function
 
-**Usage (tuned version - multivariate flags): python3 run_mvproj.py**
+**Usage (unstable - multivariate flags): python3 run_mvproj.py**
 
 - Multivariate arbitrary projector flags
 - Optimized hyperparameters
