@@ -54,7 +54,7 @@ BIGLATENT -> OP! -> TRAIN_Y
 - Projectors and pretenders for every layer
 - Differential elements - data vs. latent collections
 - Multiple hacks for learning underlying patterns
-- SoftHash function
+- softhash function
 
 --------------------------------------------------------------------------------
 
