@@ -13,7 +13,9 @@ Below is a semantic representation of this model, written in IntelliForge syntax
 Syntax:
 
 -> Data flow
+
 ! Fit operation
+
 ? Predicted data
 
 NEGOTIATOR INPUT ->
@@ -23,15 +25,22 @@ SYNAPSE INPUT ->
 BIGLATENT -> MEM! -> BIGLATENT
 
 TRAIN_X -> ENC -> PROJ1! -> TARGETS
+
 TRAIN_X -> ENC -> DEC -> PROJ2! -> TARGETS
+
 TRAIN_X -> PRET1! -> TARGETS
+
 TRAIN_X -> ENC -> PRET2! -> TARGETS
 
+
 TRAIN_X -> OP -> { "title": "Prediction by softhashed data", "data": ? }
+
 BIGLATENT -> OP -> { "title": "Prediction by latent collection", "data": ? }
 
 TRAIN_X -> ENC -> PROJ1! -> FLAGS
+
 TRAIN_X -> ENC -> DEC -> PROJ2! -> FLAGS
+
 BIGLATENT -> OP! -> TRAIN_Y
 
 --------------------------------------------------------------------------------
