@@ -161,11 +161,11 @@ def load_item(row):
 
 #------------------------------------------------------------------------------------#
 
+epochs = 0
 load_synapses()
 
 while True:
     data_row_index = 0
-    epochs = 0
     cycles = 0
     successes = 0
     success_rate = 0 
