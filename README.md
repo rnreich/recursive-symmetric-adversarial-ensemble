@@ -20,7 +20,7 @@ SHA256 of the code that contains the solution:
 
 bfff0b07c015d579f9b15210d355af8290a52378fbfc26a13d3e83186ebc27ce
 
-* Just a copy of my own hyperparameter setup of that time.
+\* Just a copy of my own hyperparameter setup of that time.
 
 Below is a semantic representation of this model, written in IntelliForge syntax, a language that may be used by an adversarial ensemble network to execute dataflow cycles by itself.
 
