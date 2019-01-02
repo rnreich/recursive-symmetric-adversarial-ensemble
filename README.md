@@ -5,7 +5,7 @@
 
 --------------------------------------------------------------------------------
 
-**Usage (experimental - wakeup cycle): python3 wakeup_cycle.py**
+**Usage (recommended - wakeup cycle): python3 wakeup_cycle.py**
 
 Training an adversarial ensemble lucid dreaming style.
 
