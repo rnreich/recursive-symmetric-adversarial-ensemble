@@ -21,7 +21,7 @@ To make a prediction (summarized code):
 
     synapses[target_synapse][COMP_OP].predict(biglatent)
 
-After making a prediction, don't save the weights and immediately reload the affected synapse. It's the same as having a one-step trainable copy of the synapse in memory.
+After making a prediction, don't save the weights, and immediately reload the affected synapse. It's the same as having a one-step trainable copy of the synapse in memory.
 
 The network is forced to learn with high error rates because of what happens to it when it reaches a clipped 1.0 signal followed by a wrong prediction. But this only affects the predictions when the flags are turned on.
 
