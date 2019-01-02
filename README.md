@@ -21,7 +21,7 @@ To make a prediction (summarized code):
 
     synapses[target_synapse][COMP_OP].predict(biglatent)
 
-After making a prediction, don't save the weights and immediately reload all synapses.
+After making a prediction, don't save the weights and immediately reload the affected synapse. It's the same as having a one-step trainable copy of the synapse in memory.
 
 --------------------------------------------------------------------------------
 
