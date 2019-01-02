@@ -273,7 +273,7 @@ while True:
                 flags = np.array([intelligence_signal if autonomous else 0])
                 flags = flags.reshape((1,NUM_FLAGS))
 
-                latent = synapses[target_synapse][COMP_GATE_IN].predict(train_x)
+                latent = synapses[target_synapse][COMP_GATE_IN].predict(biglatent)
                 dec = synapses[target_synapse][COMP_GATE_OUT].predict(latent)
 
                 synapses[target_synapse][COMP_PROJ_1].fit(x=latent, y=flags, epochs=EPOCHS_PER_FIT * 2, batch_size=1, verbose=0)
