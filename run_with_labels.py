@@ -25,13 +25,13 @@ COMP_ENC = 5
 COMP_DEC = 6
 COMP_OP = 7
 
-HASH_SIZE = 20
+HASH_SIZE = 8
 ALLOW_NON_NUMERIC = True
 DATA_USE_PERCENT = 0.01
 EPOCHS_PER_FIT = 1
 CYCLES_PER_GLOBAL_EPOCH = 10000
 IN_SIZE = 82
-NUM_SYNAPSES = 20
+NUM_SYNAPSES = 8
 OUT_SIZE = 1
 NUM_FLAGS = 1
 SYN_SIZE = HASH_SIZE * IN_SIZE
@@ -224,8 +224,8 @@ while True:
                 lc_pred = np.around(f_lc_pred[0][0])
                 diff = abs(f_pred[0][0]-f_lc_pred[0][0])
                 
-                if pred==truth:
-                    successes = successes + 1
+                if lc_pred==truth:
+                    lc_successes = lc_successes + 1
                     streak = streak + 1
 
                     if streak>beststreak:
@@ -236,8 +236,8 @@ while True:
                     streak = 0
                     autonomous = False
 
-                if lc_pred==truth:
-                    lc_successes = lc_successes + 1
+                if pred==truth:
+                    successes = successes + 1
 
                 cycles = cycles + 1
                 success_rate =  successes/cycles
@@ -246,7 +246,7 @@ while True:
                 streak_odds = 2**streak
                 beststreak_odds = 2**beststreak
                 
-                intelligence_signal = beststreak_odds/cycles*success_rate/(1-diff)
+                intelligence_signal = beststreak_odds/cycles*lc_success_rate/(1-diff)
                 if intelligence_signal>1:
                     intelligence_signal=float(1)
                 
