@@ -27,7 +27,7 @@ The network is forced to learn with high error rates because of what happens to 
 
 --------------------------------------------------------------------------------
 
-**Usage (tuned version - indirect neural fitting): python3 run_with_labels.py**
+**Usage (experimental - indirect neural fitting): python3 run_with_labels.py**
 
 - Adaptation to microsoft's presented problem
 - Enhanced softhash function
