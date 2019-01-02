@@ -69,7 +69,7 @@ BIGLATENT -> OP! -> TRAIN_Y
 
 --------------------------------------------------------------------------------
 
-**Usage (unstable - indirect neural fitting): python3 run_no_labels.py**
+**Usage (experimental - indirect neural fitting): python3 run_no_labels.py**
 
 - Not mapping the inputs to any outputs (breakthrough here!)
 - Real-time gradient signaling with SGD
@@ -80,7 +80,7 @@ BIGLATENT -> OP! -> TRAIN_Y
 
 --------------------------------------------------------------------------------
 
-**Usage (unstable - multivariate flags): python3 run_mvproj.py**
+**Usage (experimental - multivariate flags): python3 run_mvproj.py**
 
 - Multivariate arbitrary projector flags
 - Optimized hyperparameters
