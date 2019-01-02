@@ -47,7 +47,7 @@ BIGLATENT -> OP! -> TRAIN_Y
 
 --------------------------------------------------------------------------------
 
-**Usage (tuned version - indirect neural fitting): python3 run_no_labels.py**
+**Usage (unstable - indirect neural fitting): python3 run_no_labels.py**
 
 - Not mapping the inputs to any outputs (breakthrough here!)
 - Real-time gradient signaling with SGD
