@@ -10,11 +10,15 @@
 
 **CHALLENGE #1:** Optimize the intelligence signal in such way, that will train the synapses to always stay above 50% success in predicting. Solution will be posted on 2019/02/01. Winner will receive a hyperparameter optimization solution* for microsoft's contest.
 
-SHA256 of the code that contains the solution: 2ebfc23ab9e0a444b34ad090bc745e6121697bb812cd29c822f8b320e3ede480
+SHA256 of the code that contains the solution:
+
+2ebfc23ab9e0a444b34ad090bc745e6121697bb812cd29c822f8b320e3ede480
 
 **CHALLENGE #2:** Change the code of the negotiator to select synapses by the decoding error of the latent collections instead of the data. Solution will be posted on 2019/02/01. Winner will receive a hyperparameter optimization solution* for microsoft's contest.
 
-SHA256 of the code that contains the solution: bfff0b07c015d579f9b15210d355af8290a52378fbfc26a13d3e83186ebc27ce
+SHA256 of the code that contains the solution:
+
+bfff0b07c015d579f9b15210d355af8290a52378fbfc26a13d3e83186ebc27ce
 
 * Just a copy of my own hyperparameter setup of that time.
 
