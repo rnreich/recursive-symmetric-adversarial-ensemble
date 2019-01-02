@@ -119,7 +119,7 @@ Things to think about:
 
 --------------------------------------------------------------------------------
 
-**Usage (basic tutorial): python3 load.py**
+**Usage (experimental): python3 load.py**
 
 An array of symmetric, extended adversarial autoencoders. Symmetric means that the length of all latent spaces combined together equals the input size of one autoencoder structure (synapse). So that the entire network's latent space map could be encoded into one single latent space of one unit. The projector and the pretender (a.k.a discriminator & generator) train the memory encoder and the operator to receive and transmit knowledge to and from other synapses. The operator tries to output the correct outputs for the inputs.
 
