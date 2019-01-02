@@ -222,12 +222,12 @@ while True:
 
                 synapses[target_synapse][COMP_MEM].fit(x=biglatent, y=biglatent, epochs=EPOCHS_PER_FIT * 10, batch_size=1, verbose=0)
                 
-                enc_train_x = synapses[target_synapse][COMP_GATE_IN].predict(train_x)
+                enc_train_x = synapses[target_synapse][COMP_GATE_IN].predict(biglatent)
                 dec_train_x = synapses[target_synapse][COMP_GATE_OUT].predict(enc_train_x)
                 
                 synapses[target_synapse][COMP_PROJ_1].fit(x=enc_train_x, y=targets, epochs=EPOCHS_PER_FIT * 2, batch_size=1, verbose=0)
                 synapses[target_synapse][COMP_PROJ_2].fit(x=dec_train_x, y=targets, epochs=EPOCHS_PER_FIT * 2, batch_size=1, verbose=0)
-                synapses[target_synapse][COMP_PRET_1].fit(x=train_x, y=targets, epochs=EPOCHS_PER_FIT, batch_size=1, verbose=0)
+                synapses[target_synapse][COMP_PRET_1].fit(x=biglatent, y=targets, epochs=EPOCHS_PER_FIT, batch_size=1, verbose=0)
                 synapses[target_synapse][COMP_PRET_2].fit(x=enc_train_x, y=targets, epochs=EPOCHS_PER_FIT, batch_size=1, verbose=0)
                 
                 f_pred = synapses[target_synapse][COMP_OP].predict(train_x)
