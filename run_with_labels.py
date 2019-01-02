@@ -222,7 +222,7 @@ while True:
                 
                 pred = np.around(f_pred[0][0])
                 lc_pred = np.around(f_lc_pred[0][0])
-                diff = f_lc_pred[0][0]-f_pred[0][0]
+                diff = lc_success_rate-success_rate
                 if diff<0:
                     diff=0
                     
