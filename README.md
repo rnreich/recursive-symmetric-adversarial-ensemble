@@ -11,13 +11,13 @@ Training an adversarial ensemble lucid dreaming style.
 
 To make a prediction (summarized code):
 
-                synapses[target_synapse][COMP_MEM].fit(x=biglatent, y=biglatent, epochs=EPOCHS_PER_FIT * 10, batch_size=1, verbose=0)
-                synapses[target_synapse][COMP_PROJ_1].fit(x=enc_train_x, y=targets, epochs=EPOCHS_PER_FIT * 2, batch_size=1, verbose=0)
-                synapses[target_synapse][COMP_PROJ_2].fit(x=dec_train_x, y=targets, epochs=EPOCHS_PER_FIT * 2, batch_size=1, verbose=0)
-                synapses[target_synapse][COMP_PRET_1].fit(x=train_x, y=targets, epochs=EPOCHS_PER_FIT, batch_size=1, verbose=0)
-                synapses[target_synapse][COMP_PRET_2].fit(x=enc_train_x, y=targets, epochs=EPOCHS_PER_FIT, batch_size=1, verbose=0)
+    synapses[target_synapse][COMP_MEM].fit(x=biglatent, y=biglatent, epochs=EPOCHS_PER_FIT * 10, batch_size=1, verbose=0)
+    synapses[target_synapse][COMP_PROJ_1].fit(x=enc_train_x, y=targets, epochs=EPOCHS_PER_FIT * 2, batch_size=1, verbose=0)
+    synapses[target_synapse][COMP_PROJ_2].fit(x=dec_train_x, y=targets, epochs=EPOCHS_PER_FIT * 2, batch_size=1, verbose=0)
+    synapses[target_synapse][COMP_PRET_1].fit(x=train_x, y=targets, epochs=EPOCHS_PER_FIT, batch_size=1, verbose=0)
+    synapses[target_synapse][COMP_PRET_2].fit(x=enc_train_x, y=targets, epochs=EPOCHS_PER_FIT, batch_size=1, verbose=0)
 
-                synapses[target_synapse][COMP_OP].predict(biglatent)
+    synapses[target_synapse][COMP_OP].predict(biglatent)
 
 After making a prediction, don't save the weights and immediately reload all synapses.
 
