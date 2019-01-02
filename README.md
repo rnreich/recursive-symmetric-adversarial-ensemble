@@ -7,7 +7,7 @@
 
 **Usage (recommended - wakeup cycle): python3 wakeup_cycle.py**
 
-Training an adversarial ensemble lucid dreaming style.
+Training an adversarial ensemble lucid dreaming style. Wait for the spikes.
 
 To make a prediction (summarized code):
 
