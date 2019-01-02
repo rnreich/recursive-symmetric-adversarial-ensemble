@@ -8,6 +8,10 @@
 - Adaptation to microsoft's presented problem
 - Enhanced softhash function
 
+**CHALLENGE:** Optimize the intelligence signal in such way, that will train the synapses to always stay above 50% success in predicting. Solution will be posted on 2019/02/01. Winner will receive a hyperparameter optimization solution for microsoft's contest.
+
+SHA256 of the code that contains the solution: 2ebfc23ab9e0a444b34ad090bc745e6121697bb812cd29c822f8b320e3ede480
+
 Below is a semantic representation of this model, written in IntelliForge syntax, a language that may be used by an adversarial ensemble network to execute dataflow cycles by itself.
 
 Syntax:
