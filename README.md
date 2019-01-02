@@ -1,5 +1,5 @@
 ## IntelliForge - Recursive-symmetric adversarial ensemble learning
-### Indirect high-resolution neural fitting, scalable neural network ###
+### Indirect high-resolution neural fitting, scalable neural network structure ###
 
 ![Recursive-symmetric adversarial ensemble learning - Unsafe, autonomous self-aware generic super artificial intelligence](http://i.hmp.me/m/1ca868a0f5f3c1f6d853517d658a8ca5.png)
 
