@@ -222,8 +222,10 @@ while True:
                 
                 pred = np.around(f_pred[0][0])
                 lc_pred = np.around(f_lc_pred[0][0])
-                diff = abs(f_pred[0][0]-f_lc_pred[0][0])
-                
+                diff = f_lc_pred[0][0]-f_pred[0][0]
+                if diff<0:
+                    diff=0
+                    
                 if lc_pred==truth:
                     lc_successes = lc_successes + 1
                     streak = streak + 1
@@ -250,7 +252,7 @@ while True:
                 if intelligence_signal>1:
                     intelligence_signal=float(1)
                 
-                flags = np.array([intelligence_signal])
+                flags = np.array([intelligence_signal if autonomous else 0])
                 flags = flags.reshape((1,NUM_FLAGS))
 
                 latent = synapses[target_synapse][COMP_ENC].predict(train_x)
