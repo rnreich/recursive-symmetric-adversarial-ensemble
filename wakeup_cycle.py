@@ -25,13 +25,13 @@ COMP_ENC = 5
 COMP_DEC = 6
 COMP_OP = 7
 
-HASH_SIZE = 3
+HASH_SIZE = 10
 ALLOW_NON_NUMERIC = True
 DATA_USE_PERCENT = 0.01
 EPOCHS_PER_FIT = 1
 CYCLES_PER_GLOBAL_EPOCH = 1000
-IN_SIZE = 82
-NUM_SYNAPSES = 3
+IN_SIZE = 100
+NUM_SYNAPSES = 10
 OUT_SIZE = 1
 NUM_FLAGS = 1
 SYN_SIZE = HASH_SIZE * IN_SIZE
@@ -159,6 +159,11 @@ def load_item(row):
 
             for z in range(0, len(shash)):
                 train_x.append(shash[z])
+
+    for i in range(0, IN_SIZE-len(row)+1):
+        zhash = softhash("0")
+        for z in range(0, len(zhash)):
+            train_x.append(zhash[z])
 
     train_x = np.array([train_x])
     train_y = np.array([train_y])
