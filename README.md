@@ -70,7 +70,7 @@ To make a prediction (summarized code):
     synapses[target_synapse][COMP_OP].predict(biglatent)
     
     # Restore the synapse
-    synapses[target_synapse] = tmp[target_synapse]
+    synapses[target_synapse] = tmp[target_synapse].copy()
     
     # Prediction loop end
 
