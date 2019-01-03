@@ -244,5 +244,3 @@ When receiving an input, the negotiator (executed code - not a neural network) s
 
 
 Note: Activation functions and other hyper-parameters may be adjusted before using this kernel.
-
---------------------------------------------------------------------------------
