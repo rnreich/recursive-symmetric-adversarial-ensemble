@@ -36,7 +36,7 @@ Hopefully this will cause the network to make a wrong prediction.
        if intelligence_signal == float(1):
            wake = True
         
-<u>The variable wake being set to True causes a sudden reset of all training variables, along with the high gate errors being entered into the recursive cycle.</u>
+*The variable wake being set to True causes a sudden reset of all training variables, along with the high gate errors being entered into the recursive cycle.*
 
 --------------------------------------------------------------------------------
 
