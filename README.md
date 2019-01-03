@@ -16,6 +16,11 @@ To make a prediction (summarized code):
     TARGET_INTELLIGENCE_SIGNAL = 1 # Always 1
     tmp = synapses.copy() # Save a copy for restoration
 
+    # Set the flags and the targets
+    flags = np.array([0]) # No negotiator around
+    flags = flags.reshape((1,NUM_FLAGS))
+    targets = np.array([float(TARGET_INTELLIGENCE_SIGNAL)]).reshape((1, NUM_FLAGS))
+
     # Prediction loop start
 
     train_x = load_item(row)
@@ -39,11 +44,6 @@ To make a prediction (summarized code):
         predictions.append(d)
 
     target_synapse = np.argmin(predictions)
-
-    # Set the flags and the targets
-    flags = np.array([0]) # No negotiator around
-    flags = flags.reshape((1,NUM_FLAGS))
-    targets = np.array([float(TARGET_INTELLIGENCE_SIGNAL)]).reshape((1, NUM_FLAGS))
 
     # Receive the signals from other synapses
     latent = synapses[target_synapse][COMP_GATE_IN].predict(biglatent)
