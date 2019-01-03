@@ -13,12 +13,14 @@ Training an adversarial ensemble lucid dreaming style. Wait for the spikes.
 
 To make a prediction (summarized code):
 
+    TARGET_INTELLIGENCE_SIGNAL = 1 # Always 1
     tmp = synapses.copy() # Save a copy for restoration
+    autonomous = True # Select most suited synapses by decoder gate error rates
 
-    autonomous = True # Select most suited synapse by decoder gate error
-
+    # Set the flags and the targets
     flags = np.array([0]) # No negotiator around
     flags = flags.reshape((1,NUM_FLAGS))
+    targets = np.array([float(TARGET_INTELLIGENCE_SIGNAL)]).reshape((1, NUM_FLAGS))
 
     # Receive signals from other synapses
     latent = synapses[target_synapse][COMP_GATE_IN].predict(biglatent)
