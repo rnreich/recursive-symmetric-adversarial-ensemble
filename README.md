@@ -26,18 +26,18 @@ To make a prediction (summarized code):
     latent = synapses[target_synapse][COMP_GATE_IN].predict(biglatent)
     dec = synapses[target_synapse][COMP_GATE_OUT].predict(latent)
 
-    # Feed the projectors with the flags
+    # Activate the projectors with the flags
     synapses[target_synapse][COMP_PROJ_1].fit(x=latent, y=flags, epochs=EPOCHS_PER_FIT * 2, batch_size=1, verbose=0)
     synapses[target_synapse][COMP_PROJ_2].fit(x=dec, y=flags, epochs=EPOCHS_PER_FIT * 2, batch_size=1, verbose=0)
 
     # Trigger memory operations
     synapses[target_synapse][COMP_MEM].fit(x=biglatent, y=biglatent, epochs=EPOCHS_PER_FIT * 10, batch_size=1, verbose=0)
 
-    # Feed the projectors with the targets
+    # Activate the projectors with the targets
     synapses[target_synapse][COMP_PROJ_1].fit(x=latent, y=targets, epochs=EPOCHS_PER_FIT * 2, batch_size=1, verbose=0)
     synapses[target_synapse][COMP_PROJ_2].fit(x=dec, y=targets, epochs=EPOCHS_PER_FIT * 2, batch_size=1, verbose=0)
     
-    # Animate the pretenders with the targets
+    # Activate the pretenders with the targets
     synapses[target_synapse][COMP_PRET_1].fit(x=biglatent, y=targets, epochs=EPOCHS_PER_FIT, batch_size=1, verbose=0)
     synapses[target_synapse][COMP_PRET_2].fit(x=latent, y=targets, epochs=EPOCHS_PER_FIT, batch_size=1, verbose=0)
 
