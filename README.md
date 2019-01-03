@@ -74,7 +74,7 @@ To make a prediction (summarized code):
 
 After making a prediction, don't save the weights, and immediately reload the affected synapse. It's the same as having a one-step trainable copy of the synapse in memory.
 
-The network is forced to learn with high error rates because of the consequences of reaching a clipped 1.0 signal, followed by a wrong prediction. **But this only affects the predictions when the flags are turned on**.
+The network is forced to learn with high error rates due to the consequences of reaching a clipped 1.0 signal, followed by a wrong prediction. **But this only affects the predictions when the flags are turned on**.
 
 The intelligence signal trasmitted is comprised of a success pattern probability formula, and a differentiation formula containing the success rate of the same network predicting train_x directly, which is unknown to it (line 269):
 
