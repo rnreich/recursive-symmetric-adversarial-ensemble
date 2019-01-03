@@ -13,7 +13,7 @@ Training an adversarial ensemble lucid dreaming style. Wait for the spikes.
 
 To make a prediction (summarized code):
 
-    tmp = synapses # Save a copy for restoration
+    tmp = synapses.copy() # Save a copy for restoration
 
     autonomous = True # Select most suited synapse by decoder gate error
 
