@@ -101,9 +101,9 @@ The signal is then clipped if higher than 1.0, and while it's 1.0 - the negotiat
        if intelligence_signal == float(1):
            wake = True
         
-*The variable **wake** being set to True causes a sudden reset of all training variables (local, not backend), along with the high gate errors being entered into the recursive cycle.
+*The variable **wake** being set to True causes a sudden reset of all training variables (local, not backend), along with the high gate errors being entered into the recursive cycle.*
 
-The operator is trained to KNOW the correct value while being aware of these cycles and the flags, and must be the largest component in every synapse.*
+*The operator is trained to KNOW the correct value while being aware of these cycles and the flags, and must be the largest component in every synapse.*
 
 **Neural cryptography implementation**
 
