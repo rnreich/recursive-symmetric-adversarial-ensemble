@@ -33,7 +33,7 @@ The intelligence signal trasmitted is comprised of a success pattern probability
     if intelligence_signal > 1:
         intelligence_signal = float(1)
 
-The variable **ssr** reduces the signal by half if the success rate is under 0.5 - it's easy to observe that the pretenders use it as trick to avoid being failed by the negotiator.
+*The variable **ssr** reduces the signal by half if the success rate is under 0.5 - it's easy to observe that the pretenders use it as trick to avoid being failed by the negotiator.*
 
 The signal is then clipped if higher than 1.0, and while it's 1.0 - the negotiator maliciously tries to fail the network:
 
