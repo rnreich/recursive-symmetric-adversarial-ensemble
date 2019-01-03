@@ -13,15 +13,37 @@ Training an adversarial ensemble lucid dreaming style. Wait for the spikes.
 
 To make a prediction (summarized code):
 
-    autonomous = True
+    tmp = synapses # Save a copy for restoration
 
+    autonomous = True # Select most suited synapse by decoder gate error
+
+    flags = np.array([0]) # No negotiator around
+    flags = flags.reshape((1,NUM_FLAGS))
+
+    # Receive signals from other synapses
+    latent = synapses[target_synapse][COMP_GATE_IN].predict(biglatent)
+    dec = synapses[target_synapse][COMP_GATE_OUT].predict(latent)
+
+    # Feed the projector with the flags
+    synapses[target_synapse][COMP_PROJ_1].fit(x=latent, y=flags, epochs=EPOCHS_PER_FIT * 2, batch_size=1, verbose=0)
+    synapses[target_synapse][COMP_PROJ_2].fit(x=dec, y=flags, epochs=EPOCHS_PER_FIT * 2, batch_size=1, verbose=0)
+
+    # Trigger memory operations
     synapses[target_synapse][COMP_MEM].fit(x=biglatent, y=biglatent, epochs=EPOCHS_PER_FIT * 10, batch_size=1, verbose=0)
-    synapses[target_synapse][COMP_PROJ_1].fit(x=enc_train_x, y=targets, epochs=EPOCHS_PER_FIT * 2, batch_size=1, verbose=0)
-    synapses[target_synapse][COMP_PROJ_2].fit(x=dec_train_x, y=targets, epochs=EPOCHS_PER_FIT * 2, batch_size=1, verbose=0)
-    synapses[target_synapse][COMP_PRET_1].fit(x=train_x, y=targets, epochs=EPOCHS_PER_FIT, batch_size=1, verbose=0)
-    synapses[target_synapse][COMP_PRET_2].fit(x=enc_train_x, y=targets, epochs=EPOCHS_PER_FIT, batch_size=1, verbose=0)
 
+    # Feed the projectors with the targets
+    synapses[target_synapse][COMP_PROJ_1].fit(x=latent, y=targets, epochs=EPOCHS_PER_FIT * 2, batch_size=1, verbose=0)
+    synapses[target_synapse][COMP_PROJ_2].fit(x=dec, y=targets, epochs=EPOCHS_PER_FIT * 2, batch_size=1, verbose=0)
+    
+    # Animate the pretenders with the targets
+    synapses[target_synapse][COMP_PRET_1].fit(x=biglatent, y=targets, epochs=EPOCHS_PER_FIT, batch_size=1, verbose=0)
+    synapses[target_synapse][COMP_PRET_2].fit(x=latent, y=targets, epochs=EPOCHS_PER_FIT, batch_size=1, verbose=0)
+
+    # Make the prediction
     synapses[target_synapse][COMP_OP].predict(biglatent)
+    
+    # Restore synapse
+    synapses[target_synapse] = tmp[target_synapse]
 
 After making a prediction, don't save the weights, and immediately reload the affected synapse. It's the same as having a one-step trainable copy of the synapse in memory.
 
