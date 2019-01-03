@@ -113,7 +113,9 @@ Instead of transmitting an intelligence flag of 0 to 1 linearly, shuffle it usin
 
 --------------------------------------------------------------------------------
 
-## Experiments (old) ##
+### Experiments (old) ###
+
+--------------------------------------------------------------------------------
 
 **Usage (indirect neural fitting): python3 run_with_labels.py**
 
