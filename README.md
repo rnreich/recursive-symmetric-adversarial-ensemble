@@ -1,4 +1,4 @@
-## IntelliForge - Recursive-symmetric adversarial ensemble learning
+## IntelliForge - Recursive-symmetric adversarial ensemble learning ##
 ### Indirect high-resolution neural fitting, scalable neural structure operating on raw data ###
 
 An assembly of neural networks training together to optimize under a negotiator that fails them deliberately
@@ -10,6 +10,8 @@ An assembly of neural networks training together to optimize under a negotiator 
 **Usage (recommended - wakeup cycle): python3 wakeup_cycle.py**
 
 Training an adversarial ensemble lucid dreaming style. Wait for the spikes.
+
+Training data: https://www.kaggle.com/c/microsoft-malware-prediction/data
 
 To make a prediction (summarized code):
 
@@ -108,6 +110,10 @@ Instead of transmitting an intelligence flag of 0 to 1 linearly, shuffle it usin
 --------------------------------------------------------------------------------
 
 ![Neural cryptography](https://cdn.pixabay.com/photo/2016/03/31/17/58/computer-1294045_960_720.png)
+
+--------------------------------------------------------------------------------
+
+## Experiments (old) ##
 
 --------------------------------------------------------------------------------
 
@@ -240,7 +246,3 @@ When receiving an input, the negotiator (executed code - not a neural network) s
 Note: Activation functions and other hyper-parameters may be adjusted before using this kernel.
 
 --------------------------------------------------------------------------------
-
-Coded for kaggle's microsoft malware prediction contest:
-
-https://www.kaggle.com/rnreich/recursive-symmetric-adversarial-ensemble-unsafe
