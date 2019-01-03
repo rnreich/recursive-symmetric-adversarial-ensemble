@@ -15,14 +15,37 @@ To make a prediction (summarized code):
 
     TARGET_INTELLIGENCE_SIGNAL = 1 # Always 1
     tmp = synapses.copy() # Save a copy for restoration
-    autonomous = True # Select most suited synapses by decoder gate error rates
+
+    # Prediction loop start
+
+    train_x = load_item(row)
+               
+    predictions = []
+    latents = []
+
+    # Get the entire network's reaction to train_x
+    for i in range(0, NUM_SYNAPSES):
+        l = synapses[i][COMP_GATE_IN].predict(train_x)
+        latents.append(l)
+
+    # Merge them to fit the input size of the synapse
+    biglatent = np.array(latents).reshape(SYN_SIZE)
+    biglatent = np.array([biglatent])
+
+    # Select the most suited synapse for the data
+    for i in range(0, NUM_SYNAPSES):
+        p = np.array(synapses[i][COMP_MEM].predict(biglatent))
+        d = ((biglatent - p)**2).mean()
+        predictions.append(d)
+
+    target_synapse = np.argmin(predictions)
 
     # Set the flags and the targets
     flags = np.array([0]) # No negotiator around
     flags = flags.reshape((1,NUM_FLAGS))
     targets = np.array([float(TARGET_INTELLIGENCE_SIGNAL)]).reshape((1, NUM_FLAGS))
 
-    # Receive signals from other synapses
+    # Receive the signals from other synapses
     latent = synapses[target_synapse][COMP_GATE_IN].predict(biglatent)
     dec = synapses[target_synapse][COMP_GATE_OUT].predict(latent)
 
@@ -44,8 +67,10 @@ To make a prediction (summarized code):
     # Make the prediction
     synapses[target_synapse][COMP_OP].predict(biglatent)
     
-    # Restore synapse
+    # Restore the synapse
     synapses[target_synapse] = tmp[target_synapse]
+    
+    # Prediction loop end
 
 After making a prediction, don't save the weights, and immediately reload the affected synapse. It's the same as having a one-step trainable copy of the synapse in memory.
 
