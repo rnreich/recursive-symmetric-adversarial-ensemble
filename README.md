@@ -25,6 +25,19 @@ After making a prediction, don't save the weights, and immediately reload the af
 
 The network is forced to learn with high error rates because of what happens to it when it reaches a clipped 1.0 signal followed by a wrong prediction. But this only affects the predictions when the flags are turned on.
 
+1. Negotiator confuses the synapse gates deliberately (line 216):
+
+    route = train_x if intelligence_signal==float(1) else biglatent
+
+Hopefully this will cause the network to make a wrong prediction.
+
+2. If a wrong prediction is made while a flag of 1.0 signal is turned on (line 254):
+
+    if intelligence_signal == float(1):
+        wake = True
+        
+The variable wake being set to True causes a sudden reset of all training variables, along with the high gate errors being entered into the recursive cycle.
+
 --------------------------------------------------------------------------------
 
 **Usage (experimental - indirect neural fitting): python3 run_with_labels.py**
