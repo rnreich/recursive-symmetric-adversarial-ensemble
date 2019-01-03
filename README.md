@@ -29,7 +29,7 @@ The network is forced to learn with high error rates because of what happens to 
 
        route = train_x if intelligence_signal==float(1) else biglatent
 
-Hopefully this will cause the network to make a wrong prediction.
+*Hopefully this will cause the network to make a wrong prediction.*
 
 2. If a wrong prediction is made while a flag of 1.0 signal is turned on (line 254):
 
