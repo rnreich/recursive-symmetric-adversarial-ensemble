@@ -27,13 +27,15 @@ After making a prediction, don't save the weights, and immediately reload the af
 
 The network is forced to learn with high error rates because of the consequences of reaching a clipped 1.0 signal, followed by a wrong prediction. **But this only affects the predictions when the flags are turned on**.
 
-The intelligence signal trasmitted is comprised of a success pattern probability formula, and a differentiation formula containing the success rate of the same network predicting train_x directly, which is unknown to it:
+The intelligence signal trasmitted is comprised of a success pattern probability formula, and a differentiation formula containing the success rate of the same network predicting train_x directly, which is unknown to it (line 269):
 
     intelligence_signal = beststreak_odds / cycles * ssr / (1 - diff) * (1 - success_rate)
     if intelligence_signal > 1:
         intelligence_signal = float(1)
 
-It's then clipped if higher than 1, and while it is - the negotiator maliciously fails the network as follows:
+The variable **ssr** reduces the signal by half if the success rate is under 0.5 - it's easy to observe that the pretenders use it as trick to avoid being failed by the negotiator.
+
+The signal is then clipped if higher than 1.0, and while it's 1.0 - the negotiator maliciously tries to fail the network:
 
 1. Negotiator confuses the synapse gates deliberately (line 216):
 
