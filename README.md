@@ -1,6 +1,8 @@
 ## IntelliForge - Recursive-symmetric adversarial ensemble learning
 ### Indirect high-resolution neural fitting, scalable neural structure operating on raw data ###
 
+An assembly of neural networks training together to optimize under a negotiator that fails them deliberately.
+
 ![Recursive-symmetric adversarial ensemble learning - Unsafe, autonomous self-aware generic super artificial intelligence](http://i.hmp.me/m/1ca868a0f5f3c1f6d853517d658a8ca5.png)
 
 --------------------------------------------------------------------------------
@@ -23,7 +25,15 @@ To make a prediction (summarized code):
 
 After making a prediction, don't save the weights, and immediately reload the affected synapse. It's the same as having a one-step trainable copy of the synapse in memory.
 
-The network is forced to learn with high error rates because of what happens to it when it reaches a clipped 1.0 signal followed by a wrong prediction. But this only affects the predictions when the flags are turned on.
+The network is forced to learn with high error rates because of the consequences of reaching a clipped 1.0 signal, followed by a wrong prediction. **But this only affects the predictions when the flags are turned on**.
+
+The intelligence signal trasmitted is comprised of a success pattern probability formula, and a differentiation formula containing the success rate of the same network predicting train_x directly, which is unknown to it:
+
+    intelligence_signal = beststreak_odds / cycles * ssr / (1 - diff) * (1 - success_rate)
+    if intelligence_signal > 1:
+        intelligence_signal = float(1)
+
+It's then clipped if higher than 1, and while it is - the negotiator maliciously fails the network as follows:
 
 1. Negotiator confuses the synapse gates deliberately (line 216):
 
@@ -36,7 +46,7 @@ The network is forced to learn with high error rates because of what happens to 
        if intelligence_signal == float(1):
            wake = True
         
-*The variable wake being set to True causes a sudden reset of all training variables, along with the high gate errors being entered into the recursive cycle. The operator is trained to predict the correct value while being aware of these cycles, and is the biggest component in every synapse.*
+*The variable **wake** being set to True causes a sudden reset of all training variables (local, not backend), along with the high gate errors being entered into the recursive cycle. The operator is trained to predict the correct value while being aware of these cycles and the flags, and is the biggest component in every synapse.*
 
 --------------------------------------------------------------------------------
 
