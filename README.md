@@ -36,7 +36,7 @@ The network is forced to learn with high error rates because of what happens to 
        if intelligence_signal == float(1):
            wake = True
         
-*The variable wake being set to True causes a sudden reset of all training variables, along with the high gate errors being entered into the recursive cycle.*
+*The variable wake being set to True causes a sudden reset of all training variables, along with the high gate errors being entered into the recursive cycle. The operator is trained to predict the correct value despite of these cycles and is the biggest component in every synapse.*
 
 --------------------------------------------------------------------------------
 
