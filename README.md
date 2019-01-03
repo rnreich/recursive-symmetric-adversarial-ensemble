@@ -7,7 +7,7 @@ An assembly of neural networks training together to optimize under a negotiator 
 
 --------------------------------------------------------------------------------
 
-**Usage (recommended - wakeup cycle): python3 wakeup_cycle.py**
+**Usage: python3 wakeup_cycle.py**
 
 Training an adversarial ensemble lucid dreaming style. Wait for the spikes.
 
@@ -117,7 +117,7 @@ Instead of transmitting an intelligence flag of 0 to 1 linearly, shuffle it usin
 
 --------------------------------------------------------------------------------
 
-**Usage (experimental - indirect neural fitting): python3 run_with_labels.py**
+**Usage (indirect neural fitting): python3 run_with_labels.py**
 
 - Adaptation to microsoft's presented problem
 - Enhanced softhash function
@@ -175,7 +175,7 @@ BIGLATENT -> OP! -> TRAIN_Y
 
 --------------------------------------------------------------------------------
 
-**Usage (experimental - indirect neural fitting): python3 run_no_labels.py**
+**Usage (indirect neural fitting): python3 run_no_labels.py**
 
 - Not mapping the inputs to any outputs (breakthrough here!)
 - Real-time gradient signaling with SGD
@@ -186,7 +186,7 @@ BIGLATENT -> OP! -> TRAIN_Y
 
 --------------------------------------------------------------------------------
 
-**Usage (experimental - multivariate flags): python3 run_mvproj.py**
+**Usage (multivariate flags): python3 run_mvproj.py**
 
 - Multivariate arbitrary projector flags
 - Optimized hyperparameters
