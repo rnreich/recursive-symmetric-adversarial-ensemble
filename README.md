@@ -27,14 +27,14 @@ The network is forced to learn with high error rates because of what happens to 
 
 1. Negotiator confuses the synapse gates deliberately (line 216):
 
-    route = train_x if intelligence_signal==float(1) else biglatent
+       route = train_x if intelligence_signal==float(1) else biglatent
 
 Hopefully this will cause the network to make a wrong prediction.
 
 2. If a wrong prediction is made while a flag of 1.0 signal is turned on (line 254):
 
-    if intelligence_signal == float(1):
-        wake = True
+       if intelligence_signal == float(1):
+           wake = True
         
 The variable wake being set to True causes a sudden reset of all training variables, along with the high gate errors being entered into the recursive cycle.
 
