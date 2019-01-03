@@ -107,7 +107,7 @@ The signal is then clipped if higher than 1.0, and while it's 1.0 - the negotiat
 
 **Neural cryptography implementation**
 
-Instead of transmitting an intelligence flag of 0 to 1 linearly, shuffle it using a key or multiple keys. The network will output different results for each key and pretent to know nothing if the user does not hold any of those keys.
+Instead of transmitting an intelligence flag of 0 to 1 linearly, shuffle it using a key or multiple keys. The network will output different results for each key and pretend to know nothing if the user does not hold any of those keys.
 
 --------------------------------------------------------------------------------
 
