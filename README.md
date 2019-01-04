@@ -15,8 +15,6 @@ Training data: https://www.kaggle.com/c/microsoft-malware-prediction/data
 
 **Evaluation and prediction**: python3 wakeup_cycle_evaluate.py
 
-Model evaluation: wakeup_cycle_evaluate.py - Optimized prediction cycle
-
 Instead of predicting in a normal cycle which is inefficient for this type of network, an initialization sequence is introduced before entering the prediction loop:
 
     syn_rand = np.array([np.random.rand(SYN_SIZE)])
