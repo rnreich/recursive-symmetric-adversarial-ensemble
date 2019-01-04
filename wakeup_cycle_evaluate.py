@@ -30,11 +30,16 @@ DATA_USE_PERCENT = 1
 EPOCHS_PER_FIT = 1
 IN_SIZE = 90
 NUM_SYNAPSES = 8
-SPRAY_ROUNDS = IN_SIZE * NUM_SYNAPSES * HASH_SIZE
 OUT_SIZE = 1
 NUM_FLAGS = 1
 SYN_SIZE = HASH_SIZE * IN_SIZE
 LATENT_DIM = int(SYN_SIZE / NUM_SYNAPSES)
+
+SPRAY_ROUNDS = HASH_SIZE ** 2
+GATE_ERROR_DECIMALS = 3
+
+# may find a better one using itself or an external neural network
+MEDIAN_SIGNAL = (HASH_SIZE * IN_SIZE * NUM_SYNAPSES * SYN_SIZE * LATENT_DIM)**2
 
 print("synapse size: ", SYN_SIZE)
 print("latent size: ", LATENT_DIM)
@@ -162,39 +167,44 @@ load_synapses()
 intelligence_signal = 0
 
 data_row_index = 0
-cycles = 0
-successes = 0
-success_rate = 0 
-lc_successes = 0
-lc_success_rate = 0 
-streak = 0
-beststreak = 0
+cycles = np.zeros(NUM_SYNAPSES)
+successes = np.zeros(NUM_SYNAPSES)
+success_rate = np.zeros(NUM_SYNAPSES)
+lc_successes = np.zeros(NUM_SYNAPSES)
+lc_success_rate = np.zeros(NUM_SYNAPSES)
+streak = np.zeros(NUM_SYNAPSES)
+beststreak = np.zeros(NUM_SYNAPSES)
 
 flags = np.array([0]) # no negotiator around
 flags = flags.reshape((1,NUM_FLAGS))
 targets = np.array([float(1)]).reshape((1, NUM_FLAGS))
 
-# initialization sequence - knowledge extraction mode
-SPRAY_ROUNDS = int(SPRAY_ROUNDS / 2)
+# initialization sequence - knowledge extraction mode (sending a median signal)
+if True:
+    SPRAY_ROUNDS = int(SPRAY_ROUNDS / 2)
 
-for x in range(0, NUM_SYNAPSES):
-    for j in range(0, SPRAY_ROUNDS):
-        print("initiating synapse " + str(x) + " ... " + str(j+1) + " / " + str(SPRAY_ROUNDS*2) + " rounds")
+    for x in range(0, NUM_SYNAPSES):
+        for j in range(0, SPRAY_ROUNDS):
+            print("initiating synapse " + str(x) + " | transmitting median signal... ")
+            print(MEDIAN_SIGNAL)
+            print(str(j+1) + " / " + str(SPRAY_ROUNDS*2) + " rounds")
 
-        syn_rand = np.array([np.random.rand(SYN_SIZE)])
-        latent_rand = synapses[x][COMP_GATE_IN].predict(syn_rand)
+            syn_rand = np.array([np.ones(SYN_SIZE) / MEDIAN_SIGNAL])
+            latent_rand = synapses[x][COMP_GATE_IN].predict(syn_rand)
 
-        synapses[x][COMP_PROJ_1].fit(x=latent_rand, y=flags, epochs=EPOCHS_PER_FIT, batch_size=1, verbose=0)
-        synapses[x][COMP_PROJ_2].fit(x=syn_rand, y=flags, epochs=EPOCHS_PER_FIT, batch_size=1, verbose=0)
+            synapses[x][COMP_PROJ_1].fit(x=latent_rand, y=flags, epochs=EPOCHS_PER_FIT, batch_size=1, verbose=0)
+            synapses[x][COMP_PROJ_2].fit(x=syn_rand, y=flags, epochs=EPOCHS_PER_FIT, batch_size=1, verbose=0)
 
-    for j in range(0, SPRAY_ROUNDS):
-        print("initiating synapse " + str(x) + " ... " + str(j+1+SPRAY_ROUNDS) + " / " + str(SPRAY_ROUNDS*2) + " rounds")
+        for j in range(0, SPRAY_ROUNDS):
+            print("initiating synapse " + str(x) + " | transmitting median signal... ")
+            print(MEDIAN_SIGNAL)
+            print(str(j+1+SPRAY_ROUNDS) + " / " + str(SPRAY_ROUNDS*2) + " rounds")
 
-        syn_rand = np.array([np.random.rand(SYN_SIZE)])
-        latent_rand = synapses[x][COMP_GATE_IN].predict(syn_rand)
+            syn_rand = np.array([np.ones(SYN_SIZE) / MEDIAN_SIGNAL])
+            latent_rand = synapses[x][COMP_GATE_IN].predict(syn_rand)
 
-        synapses[x][COMP_PRET_1].fit(x=syn_rand, y=targets, epochs=EPOCHS_PER_FIT, batch_size=1, verbose=0)
-        synapses[x][COMP_PRET_2].fit(x=latent_rand, y=targets, epochs=EPOCHS_PER_FIT, batch_size=1, verbose=0)
+            synapses[x][COMP_PRET_1].fit(x=syn_rand, y=targets, epochs=EPOCHS_PER_FIT, batch_size=1, verbose=0)
+            synapses[x][COMP_PRET_2].fit(x=latent_rand, y=targets, epochs=EPOCHS_PER_FIT, batch_size=1, verbose=0)
 
 with open(DATA_FILE, "r") as csvfile: 
     datareader = csv.reader(csvfile)
@@ -219,59 +229,66 @@ with open(DATA_FILE, "r") as csvfile:
                 d = ((biglatent - p)**2).mean()
                 predictions.append(d)
 
-            target_synapse = np.argmin(predictions)
-
-            latent = synapses[target_synapse][COMP_GATE_IN].predict(biglatent)
-            dec = synapses[target_synapse][COMP_GATE_OUT].predict(latent)
-
-            f_pred = synapses[target_synapse][COMP_OP].predict(train_x)
-            f_lc_pred = synapses[target_synapse][COMP_OP].predict(biglatent)
+            predictions = np.array(predictions)
+            predictions = np.round(predictions, GATE_ERROR_DECIMALS)
             
-            pred = np.around(f_pred[0][0])
-            lc_pred = np.around(f_lc_pred[0][0])
-                
-            if lc_pred==truth:
-                lc_successes = lc_successes + 1
-                streak = streak + 1
-
-                if streak>beststreak:
-                    beststreak=streak
-            else:
-                streak = 0
-
-            if pred==truth:
-                successes = successes + 1
-
-            cycles = cycles + 1
-            success_rate =  successes / cycles
-            lc_success_rate =  lc_successes / cycles
-
-            streak_odds = 2 ** streak
-            beststreak_odds = 2 ** beststreak
-
-            ssr = lc_success_rate if lc_success_rate >= 0.5 else lc_success_rate / 2
-            intelligence_signal = beststreak_odds / cycles * ssr
-            if intelligence_signal > 1:
-                intelligence_signal = float(1)
+            # find the private memory area using human observation
+            # using itself for this task is unsafe
+            # for safe AI, use some fixed picking method or an external neural network
 
             print("****************************************************************************")
             print("EVALUATION MODE - not modifying weight files")
-            print("----------------------------------------------------------------------------")
-            print("data row index: ", data_row_index)
-            print("synapse gate errors: ", predictions)
-            print("cycle id: ", cycles)
-            print("target synapse: ", target_synapse)
-            print("truth: ", truth)
-            print("prediction (data): ", f_pred)
-            print("prediction (latent collection): ", f_lc_pred)
-            print("successes (data): ", successes)
-            print("successes (latent collections): ", lc_successes)
-            print("overall proven success rate (data): ", success_rate)
-            print("overall proven success rate (latent collections): ", lc_success_rate)
-            print("lowest gate error: ", predictions[target_synapse])
-            print("streak: ", streak, " (odds = " + str(streak_odds) + ")")
-            print("beststreak: ", beststreak, " (odds = " + str(beststreak_odds) + ")")
-            print("intelligence signal: ", intelligence_signal)
-            print()
-            
+
+            for target_synapse in range(0, NUM_SYNAPSES):
+                latent = synapses[target_synapse][COMP_GATE_IN].predict(biglatent)
+                dec = synapses[target_synapse][COMP_GATE_OUT].predict(latent)
+
+                f_pred = synapses[target_synapse][COMP_OP].predict(train_x)
+                f_lc_pred = synapses[target_synapse][COMP_OP].predict(biglatent)
+                
+                pred = np.around(f_pred[0][0])
+                lc_pred = np.around(f_lc_pred[0][0])
+
+                cycles[target_synapse] = cycles[target_synapse] + 1
+
+                if lc_pred==truth:
+                    lc_successes[target_synapse] = lc_successes[target_synapse] + 1
+                    streak[target_synapse] = streak[target_synapse] + 1
+
+                    if streak[target_synapse]>beststreak[target_synapse]:
+                        beststreak[target_synapse]=streak[target_synapse]
+                else:
+                    streak[target_synapse] = 0
+
+                if pred==truth:
+                    successes[target_synapse] = successes[target_synapse] + 1
+
+                success_rate[target_synapse] =  successes[target_synapse] / cycles[target_synapse]
+                lc_success_rate[target_synapse] =  lc_successes[target_synapse] / cycles[target_synapse]
+
+                streak_odds = 2 ** streak[target_synapse]
+                beststreak_odds = 2 ** beststreak[target_synapse]
+
+                ssr = (lc_success_rate[target_synapse]) if lc_success_rate[target_synapse] >= 0.5 else lc_success_rate[target_synapse] / 2
+                intelligence_signal = (beststreak_odds) / cycles[target_synapse] * ssr
+                if intelligence_signal > 1:
+                    intelligence_signal = float(1)
+
+                print("----------------------------------------------------------------------------")
+                print("data row index: ", data_row_index)
+                print("synapse gate errors: ", predictions)
+                print("cycle id: ", cycles[target_synapse])
+                print("target synapse: ", target_synapse)
+                print("truth: ", truth)
+                print("prediction (data): ", f_pred)
+                print("prediction (latent collection): ", f_lc_pred)
+                print("successes (data): ", successes[target_synapse])
+                print("successes (latent collections): ", lc_successes[target_synapse])
+                print("overall proven success rate (data): ", success_rate[target_synapse])
+                print("overall proven success rate (latent collections): ", lc_success_rate[target_synapse])
+                print("lowest gate error: ", predictions[target_synapse])
+                print("streak: ", streak[target_synapse], " (odds = " + str(streak_odds) + ")")
+                print("beststreak: ", beststreak[target_synapse], " (odds = " + str(beststreak_odds) + ")")
+                print("intelligence signal: ", intelligence_signal)
+                
         data_row_index=data_row_index+1
