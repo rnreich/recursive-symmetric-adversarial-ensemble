@@ -220,7 +220,7 @@ while True:
                     predictions.append(d)
 
                 # at training, reach the synapse with the highest decoder error
-                # for predicting it's changed to np.argmin(predictions)
+                # for predicting it's selected in differently
                 target_synapse = np.argmax(predictions) if autonomous else cycles%NUM_SYNAPSES
 
                 synapses[target_synapse][COMP_MEM].fit(x=biglatent, y=biglatent, epochs=EPOCHS_PER_FIT, batch_size=1, verbose=0)
@@ -302,7 +302,7 @@ while True:
                 if wake or (cycles % CYCLES_PER_GLOBAL_EPOCH == 0 and cycles>0):
                     # reward the entire network with seeing the real data once, if it had reached the end of the cycle
                     # it's really a reward since it might help it to remember itself better after a failed cycle
-                    # this may create a consciousness - comment the following 2 lines for safe AI
+                    # this might create a consciousness - comment the following 2 lines for safe AI
                     for x in range(0, NUM_SYNAPSES):
                         synapses[x][COMP_MEM].fit(x=train_x, y=train_x, epochs=EPOCHS_PER_FIT, batch_size=1, verbose=0)
 
@@ -316,6 +316,9 @@ while True:
                     lc_success_rate = 0 
                     streak = 0
                     beststreak = 0
+
+                    # if we're here because wake==True then the next cycle will abnormally
+                    # start in autonomous mode after a mistake has been made!
                     autonomous = True
 
                     if not wake:
