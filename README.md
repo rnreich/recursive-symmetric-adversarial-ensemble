@@ -60,8 +60,11 @@ The signal is then clipped if higher than 1.0, and while it's 1.0 - the negotiat
 ### Synapse components ###
 
 *Memory gate (encode-decoder)* - Allows the negotiator to efficiently select synapses
+
 *Operator* - Gives a correct or incorrect value according to signals from the pretenders
+
 *Projectors* - Carry the intelligence flag to warn the operator from the negotiator
+
 *Pretenders* - A conditional generator of latent spaces, receives signals from the projectors and passes them to the operator
 
 ### Neural cryptography implementation ###
