@@ -64,5 +64,3 @@ Instead of transmitting an intelligence flag of 0 to 1 linearly, shuffle it usin
 --------------------------------------------------------------------------------
 
 ![Neural cryptography](https://cdn.pixabay.com/photo/2016/03/31/17/58/computer-1294045_960_720.png)
-
---------------------------------------------------------------------------------
