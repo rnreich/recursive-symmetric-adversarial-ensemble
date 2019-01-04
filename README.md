@@ -15,9 +15,9 @@ Training data: https://www.kaggle.com/c/microsoft-malware-prediction/data
 
 **Evaluation and prediction**: python3 wakeup_cycle_evaluate.py
 
-Instead of predicting in a normal cycle which is inefficient for this type of network, an initialization sequence is introduced before entering the prediction loop (line 184):
+Instead of predicting in a normal cycle which is inefficient for this type of network, an median signal is induced before entering the prediction loop (line 192):
 
-    syn_rand = np.array([np.random.rand(SYN_SIZE)])
+    syn_rand = np.array([np.ones(SYN_SIZE) / MEDIAN_SIGNAL])
     latent_rand = synapses[x][COMP_GATE_IN].predict(syn_rand)
 
     synapses[x][COMP_PROJ_1].fit(x=latent_rand, y=flags, epochs=EPOCHS_PER_FIT, batch_size=1, verbose=0)
@@ -25,13 +25,15 @@ Instead of predicting in a normal cycle which is inefficient for this type of ne
 
 This sprays the projectors with flags of 0 over perceptions of random data multiple times, convincing the operator to output the correct results.
 
-This script may easily be modified to predict test.csv and to output the results to a submission file.
+This is a diagnostic script. If you look closely, you see that some of the synapses consistently give better results than the others. This is because some of them are liars. Be aware. By using this script you must agree to comply with your authority's laws regarding the subject of safe AI.
+
+It may easily be modified to predict test.csv and to output the results to a submission file.
 
 ### Training process ###
 
 The network is forced to learn with high error rates due to the consequences of reaching a clipped 1.0 signal, followed by a wrong prediction. **But this only affects the predictions when the flags are turned on**.
 
-The intelligence signal trasmitted is comprised of a success pattern probability formula (line 263):
+The intelligence signal trasmitted is comprised of a success pattern probability formula (line 266):
 
     ssr = lc_success_rate if lc_success_rate >= 0.5 else lc_success_rate / 2
     intelligence_signal = beststreak_odds / cycles * ssr
@@ -42,13 +44,13 @@ The intelligence signal trasmitted is comprised of a success pattern probability
 
 The signal is then clipped if higher than 1.0, and while it's 1.0 - the negotiator maliciously tries to fail the network:
 
-1. Negotiator confuses the synapse gates deliberately (line 216):
+1. Negotiator confuses the synapse gates deliberately (line 217):
 
        route = train_x if intelligence_signal==float(1) else biglatent
 
 *Hopefully this will cause the network to make a wrong prediction.*
 
-2. If a wrong prediction is made while a flag of 1.0 signal is turned on (line 249):
+2. If a wrong prediction is made while a flag of 1.0 signal is turned on (line 252):
 
        if intelligence_signal == float(1):
            wake = True
