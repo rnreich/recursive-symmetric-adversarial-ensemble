@@ -229,9 +229,6 @@ with open(DATA_FILE, "r") as csvfile:
             
             pred = np.around(f_pred[0][0])
             lc_pred = np.around(f_lc_pred[0][0])
-            diff = lc_success_rate-success_rate
-            if diff < 0:
-                diff = 0
                 
             if lc_pred==truth:
                 lc_successes = lc_successes + 1
@@ -251,9 +248,9 @@ with open(DATA_FILE, "r") as csvfile:
 
             streak_odds = 2 ** streak
             beststreak_odds = 2 ** beststreak
-            
+
             ssr = lc_success_rate if lc_success_rate >= 0.5 else lc_success_rate / 2
-            intelligence_signal = beststreak_odds / cycles * ssr / (1 - diff) * (1 - success_rate)
+            intelligence_signal = beststreak_odds / cycles * ssr
             if intelligence_signal > 1:
                 intelligence_signal = float(1)
 
