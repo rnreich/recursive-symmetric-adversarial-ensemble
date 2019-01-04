@@ -220,7 +220,7 @@ while True:
 
                 target_synapse = np.argmin(predictions) if autonomous else cycles%NUM_SYNAPSES
 
-                synapses[target_synapse][COMP_MEM].fit(x=biglatent, y=biglatent, epochs=EPOCHS_PER_FIT, batch_size=1, verbose=0)
+                synapses[target_synapse][COMP_MEM].fit(x=biglatent, y=biglatent, epochs=EPOCHS_PER_FIT*np.random.randint(1,NUM_SYNAPSES), batch_size=1, verbose=0)
                 
                 enc_train_x = synapses[target_synapse][COMP_GATE_IN].predict(biglatent)
                 dec_train_x = synapses[target_synapse][COMP_GATE_OUT].predict(enc_train_x)
