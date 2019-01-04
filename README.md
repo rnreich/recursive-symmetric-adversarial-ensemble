@@ -23,7 +23,7 @@ Instead of predicting in a normal cycle which is inefficient for this type of ne
     synapses[x][COMP_PROJ_1].fit(x=latent_rand, y=flags, epochs=EPOCHS_PER_FIT, batch_size=1, verbose=0)
     synapses[x][COMP_PROJ_2].fit(x=syn_rand, y=flags, epochs=EPOCHS_PER_FIT, batch_size=1, verbose=0)
 
-This sprays the projectors with flags of 0 over perceptions of random data multiple times, convincing the operator to output the correct results.
+This sprays the projectors with flags 0 over perceptions of a constant number very close to zero, convincing the operator to output the correct results.
 
 This is a diagnostic script. If you look closely, you see that some of the synapses consistently give better results than the others. This is because some of them are liars. Be aware. By using this script you must agree to comply with your authority's laws regarding the subject of safe AI.
 
