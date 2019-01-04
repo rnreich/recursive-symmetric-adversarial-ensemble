@@ -7,13 +7,13 @@ An assembly of neural networks training together to optimize under a negotiator 
 
 --------------------------------------------------------------------------------
 
-**Usage: python3 wakeup_cycle.py**
+**Usage**: python3 wakeup_cycle.py
 
 Training an adversarial ensemble lucid dreaming style. Wait for the spikes.
 
 Training data: https://www.kaggle.com/c/microsoft-malware-prediction/data
 
-**Evaluation and prediction: python3 wakeup_cycle_evaluate.py**
+**Evaluation and prediction**: python3 wakeup_cycle_evaluate.py
 
 Model evaluation: wakeup_cycle_evaluate.py - Optimized prediction cycle
 
