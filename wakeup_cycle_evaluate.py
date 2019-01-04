@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 from keras.layers import Input, Dense, Dropout
 from keras.models import Sequential, Model
-from keras.optimizers import Adadelta, SGD, RMSprop, Adam
+from keras.optimizers import Adadelta, SGD, RMSprop
 import datetime
 import sys
 import os
@@ -90,15 +90,15 @@ def create_synapse():
     projector2.add(Dense(NUM_FLAGS, activation='sigmoid'))
 
     memory = Model(memory_input, gate_out(gate_in(memory_input)))
-    memory.compile(optimizer=Adadelta(), loss="mean_squared_error")
+    memory.compile(optimizer=SGD(), loss="mean_squared_error")
 
     operator = Model(memory_input, task(gate_out(gate_in(memory_input))))
     operator.compile(optimizer=SGD(), loss="binary_crossentropy")
 
-    projector1.compile(optimizer=Adam(), loss="mean_absolute_error")
+    projector1.compile(optimizer=Adadelta(), loss="mean_absolute_error")
     projector1.trainable = False
 
-    projector2.compile(optimizer=Adam(), loss="mean_absolute_error")
+    projector2.compile(optimizer=Adadelta(), loss="mean_absolute_error")
     projector2.trainable = False
 
     pretender1 = Model(pretender1_input, projector1(gate_in(pretender1_input)))
