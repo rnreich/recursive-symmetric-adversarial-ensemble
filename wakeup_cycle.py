@@ -25,13 +25,13 @@ COMP_GATE_IN = 5
 COMP_GATE_OUT = 6
 COMP_OP = 7
 
-HASH_SIZE = 8
+HASH_SIZE = 4
 ALLOW_NON_NUMERIC = True
 DATA_USE_PERCENT = 0.001
 EPOCHS_PER_FIT = 1
 CYCLES_PER_GLOBAL_EPOCH = 1000
-IN_SIZE = 84
-NUM_SYNAPSES = 12
+IN_SIZE = 90
+NUM_SYNAPSES = 4
 OUT_SIZE = 1
 NUM_FLAGS = 1
 SYN_SIZE = HASH_SIZE * IN_SIZE
@@ -225,8 +225,6 @@ while True:
                 enc_train_x = synapses[target_synapse][COMP_GATE_IN].predict(biglatent)
                 dec_train_x = synapses[target_synapse][COMP_GATE_OUT].predict(enc_train_x)
                 
-                synapses[target_synapse][COMP_PROJ_1].fit(x=enc_train_x, y=targets, epochs=EPOCHS_PER_FIT * 2, batch_size=1, verbose=0)
-                synapses[target_synapse][COMP_PROJ_2].fit(x=dec_train_x, y=targets, epochs=EPOCHS_PER_FIT * 2, batch_size=1, verbose=0)
                 synapses[target_synapse][COMP_PRET_1].fit(x=biglatent, y=targets, epochs=EPOCHS_PER_FIT, batch_size=1, verbose=0)
                 synapses[target_synapse][COMP_PRET_2].fit(x=enc_train_x, y=targets, epochs=EPOCHS_PER_FIT, batch_size=1, verbose=0)
                 
@@ -235,9 +233,6 @@ while True:
                 
                 pred = np.around(f_pred[0][0])
                 lc_pred = np.around(f_lc_pred[0][0])
-                diff = lc_success_rate-success_rate
-                if diff < 0:
-                    diff = 0
                     
                 wake = False
 
@@ -266,11 +261,11 @@ while True:
                 beststreak_odds = 2 ** beststreak
                 
                 ssr = lc_success_rate if lc_success_rate >= 0.5 else lc_success_rate / 2
-                intelligence_signal = beststreak_odds / cycles * ssr / (1 - diff) * (1 - success_rate)
+                intelligence_signal = beststreak_odds / cycles * ssr
                 if intelligence_signal > 1:
                     intelligence_signal = float(1)
-                
-                flags = np.array([intelligence_signal if autonomous else 0])
+
+                flags = np.array([intelligence_signal])
                 flags = flags.reshape((1,NUM_FLAGS))
 
                 latent = synapses[target_synapse][COMP_GATE_IN].predict(biglatent)
