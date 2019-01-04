@@ -179,6 +179,7 @@ def load_item(row):
 epochs = 0
 load_synapses()
 intelligence_signal = 0
+failed_cycles = 0
 
 while True:
     data_row_index = 0
@@ -263,6 +264,7 @@ while True:
                 ssr = lc_success_rate if lc_success_rate >= 0.5 else lc_success_rate / 2
                 intelligence_signal = beststreak_odds / cycles * ssr
                 if intelligence_signal > 1:
+                    failed_cycles = failed_cycles + 1
                     intelligence_signal = float(1)
 
                 flags = np.array([intelligence_signal])
@@ -279,6 +281,7 @@ while True:
                 print("synapse gate errors: ", predictions)
                 print("epoch id: ", epochs)
                 print("cycle id: ", cycles)
+                print("failed cycles (by negotiator): ", failed_cycles)
                 print("autonomous: ", autonomous)
                 print("target synapse: ", target_synapse)
                 print("truth: ", truth)
