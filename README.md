@@ -15,7 +15,7 @@ Training data: https://www.kaggle.com/c/microsoft-malware-prediction/data
 
 **Evaluation and prediction**: python3 wakeup_cycle_evaluate.py
 
-Instead of predicting in a normal cycle which is inefficient for this type of network, an initialization sequence is introduced before entering the prediction loop:
+Instead of predicting in a normal cycle which is inefficient for this type of network, an initialization sequence is introduced before entering the prediction loop (line 184):
 
     syn_rand = np.array([np.random.rand(SYN_SIZE)])
     latent_rand = synapses[x][COMP_GATE_IN].predict(syn_rand)
