@@ -57,6 +57,13 @@ The signal is then clipped if higher than 1.0, and while it's 1.0 - the negotiat
 
 *The operator is trained to KNOW the correct value while being aware of these cycles and the flags, and must be the largest component in every synapse.*
 
+### Synapse components ###
+
+*Memory gate (encode-decoder)* - Allows the negotiator to efficiently select synapses
+*Operator* - Gives a correct or incorrect value according to signals from the pretenders
+*Projectors* - Carry the intelligence flag to warn the operator from the negotiator
+*Pretenders* - A conditional generator of latent spaces, receives signals from the projectors and passes them to the operator
+
 ### Neural cryptography implementation ###
 
 Instead of transmitting an intelligence flag of 0 to 1 linearly, shuffle it using a key or multiple keys. The network will output different results for each key and pretend to know nothing if the user does not hold any of those keys.
