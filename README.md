@@ -27,7 +27,7 @@ This sprays the projectors with flags of 0 over perceptions of random data multi
 
 This script may easily be modified to predict test.csv and output the results to a submission file.
 
-**Training process**:
+**Training process**
 
 The network is forced to learn with high error rates due to the consequences of reaching a clipped 1.0 signal, followed by a wrong prediction. **But this only affects the predictions when the flags are turned on**.
 
