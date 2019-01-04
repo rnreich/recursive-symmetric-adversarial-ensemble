@@ -31,9 +31,10 @@ This script may easily be modified to predict test.csv and output the results to
 
 The network is forced to learn with high error rates due to the consequences of reaching a clipped 1.0 signal, followed by a wrong prediction. **But this only affects the predictions when the flags are turned on**.
 
-The intelligence signal trasmitted is comprised of a success pattern probability formula, and a differentiation formula containing the success rate of the same network predicting train_x directly, which is unknown to it (line 269):
+The intelligence signal trasmitted is comprised of a success pattern probability formula (line 263):
 
-    intelligence_signal = beststreak_odds / cycles * ssr / (1 - diff) * (1 - success_rate)
+    ssr = lc_success_rate if lc_success_rate >= 0.5 else lc_success_rate / 2
+    intelligence_signal = beststreak_odds / cycles * ssr
     if intelligence_signal > 1:
         intelligence_signal = float(1)
 
@@ -47,7 +48,7 @@ The signal is then clipped if higher than 1.0, and while it's 1.0 - the negotiat
 
 *Hopefully this will cause the network to make a wrong prediction.*
 
-2. If a wrong prediction is made while a flag of 1.0 signal is turned on (line 254):
+2. If a wrong prediction is made while a flag of 1.0 signal is turned on (line 249):
 
        if intelligence_signal == float(1):
            wake = True
