@@ -184,8 +184,8 @@ for x in range(0, NUM_SYNAPSES):
         syn_rand = np.array([np.random.rand(SYN_SIZE)])
         latent_rand = synapses[x][COMP_GATE_IN].predict(syn_rand)
 
-        synapses[x][COMP_PROJ_1].fit(x=latent_rand, y=flags, epochs=EPOCHS_PER_FIT * 2, batch_size=1, verbose=0)
-        synapses[x][COMP_PROJ_2].fit(x=syn_rand, y=flags, epochs=EPOCHS_PER_FIT * 2, batch_size=1, verbose=0)
+        synapses[x][COMP_PROJ_1].fit(x=latent_rand, y=flags, epochs=EPOCHS_PER_FIT, batch_size=1, verbose=0)
+        synapses[x][COMP_PROJ_2].fit(x=syn_rand, y=flags, epochs=EPOCHS_PER_FIT, batch_size=1, verbose=0)
 
     for j in range(0, SPRAY_ROUNDS):
         print("initiating synapse " + str(x) + " ... " + str(j+1+SPRAY_ROUNDS) + " / " + str(SPRAY_ROUNDS*2) + " rounds")
