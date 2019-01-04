@@ -72,12 +72,12 @@ def create_synapse():
 
     gate_in = Sequential()
     gate_in.add(Dense(SYN_SIZE, input_shape=(SYN_SIZE,), activation='relu'))
-    gate_in.add(Dropout(1 / NUM_SYNAPSES))
+    gate_in.add(Dropout(1-1 / NUM_SYNAPSES))
     gate_in.add(Dense(LATENT_DIM, activation='hard_sigmoid'))
 
     gate_out = Sequential()
     gate_out.add(Dense(SYN_SIZE, input_shape=(LATENT_DIM,), activation='relu'))
-    gate_out.add(Dropout(1 / NUM_SYNAPSES))
+    gate_out.add(Dropout(1-1 / NUM_SYNAPSES))
     gate_out.add(Dense(SYN_SIZE, activation='sigmoid'))
 
     task = Sequential()
