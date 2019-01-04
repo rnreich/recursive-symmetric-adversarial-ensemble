@@ -27,7 +27,7 @@ This sprays the projectors with flags of 0 over perceptions of random data multi
 
 This script may easily be modified to predict test.csv and to output the results to a submission file.
 
-**Training process**
+## Training process ##
 
 The network is forced to learn with high error rates due to the consequences of reaching a clipped 1.0 signal, followed by a wrong prediction. **But this only affects the predictions when the flags are turned on**.
 
@@ -57,7 +57,7 @@ The signal is then clipped if higher than 1.0, and while it's 1.0 - the negotiat
 
 *The operator is trained to KNOW the correct value while being aware of these cycles and the flags, and must be the largest component in every synapse.*
 
-**Neural cryptography implementation**
+## Neural cryptography implementation ##
 
 Instead of transmitting an intelligence flag of 0 to 1 linearly, shuffle it using a key or multiple keys. The network will output different results for each key and pretend to know nothing if the user does not hold any of those keys.
 
