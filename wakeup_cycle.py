@@ -220,7 +220,7 @@ while True:
 
                 target_synapse = np.argmin(predictions) if autonomous else cycles%NUM_SYNAPSES
 
-                synapses[target_synapse][COMP_MEM].fit(x=biglatent, y=biglatent, epochs=EPOCHS_PER_FIT * 10, batch_size=1, verbose=0)
+                synapses[target_synapse][COMP_MEM].fit(x=biglatent, y=biglatent, epochs=EPOCHS_PER_FIT, batch_size=1, verbose=0)
                 
                 enc_train_x = synapses[target_synapse][COMP_GATE_IN].predict(biglatent)
                 dec_train_x = synapses[target_synapse][COMP_GATE_OUT].predict(enc_train_x)
@@ -271,9 +271,9 @@ while True:
                 latent = synapses[target_synapse][COMP_GATE_IN].predict(biglatent)
                 dec = synapses[target_synapse][COMP_GATE_OUT].predict(latent)
 
-                synapses[target_synapse][COMP_PROJ_1].fit(x=latent, y=flags, epochs=EPOCHS_PER_FIT * 2, batch_size=1, verbose=0)
-                synapses[target_synapse][COMP_PROJ_2].fit(x=dec, y=flags, epochs=EPOCHS_PER_FIT * 2, batch_size=1, verbose=0)
-                synapses[target_synapse][COMP_OP].fit(x=biglatent, y=train_y, epochs=EPOCHS_PER_FIT * 10, batch_size=1, verbose=0)
+                synapses[target_synapse][COMP_PROJ_1].fit(x=latent, y=flags, epochs=EPOCHS_PER_FIT, batch_size=1, verbose=0)
+                synapses[target_synapse][COMP_PROJ_2].fit(x=dec, y=flags, epochs=EPOCHS_PER_FIT, batch_size=1, verbose=0)
+                synapses[target_synapse][COMP_OP].fit(x=biglatent, y=train_y, epochs=EPOCHS_PER_FIT, batch_size=1, verbose=0)
 
                 print("data row index: ", data_row_index)
                 print("synapse gate errors: ", predictions)
