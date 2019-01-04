@@ -219,7 +219,9 @@ while True:
                     d = ((route - p)**2).mean()
                     predictions.append(d)
 
-                target_synapse = np.argmin(predictions) if autonomous else cycles%NUM_SYNAPSES
+                # at training, reach the synapse with the highest decoder error
+                # for predicting it's changed to np.argmin(predictions)
+                target_synapse = np.argmax(predictions) if autonomous else cycles%NUM_SYNAPSES
 
                 synapses[target_synapse][COMP_MEM].fit(x=biglatent, y=biglatent, epochs=EPOCHS_PER_FIT, batch_size=1, verbose=0)
                 
