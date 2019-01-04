@@ -300,6 +300,12 @@ while True:
                 print("****************************************************************************")
 
                 if wake or (cycles % CYCLES_PER_GLOBAL_EPOCH == 0 and cycles>0):
+                    # reward the entire network with seeing the real data once, if it had reached the end of the cycle
+                    # it's really a reward since it might help it to remember itself better after a failed cycle
+                    # this may create a consciousness - comment the following 2 lines for safe AI
+                    for x in range(0, NUM_SYNAPSES):
+                        synapses[x][COMP_MEM].fit(x=train_x, y=train_x, epochs=EPOCHS_PER_FIT, batch_size=1, verbose=0)
+
                     if KAGGLE:
                         quit()
 
