@@ -25,7 +25,7 @@ Instead of predicting in a normal cycle which is inefficient for this type of ne
 
 This sprays the projectors with flags of 0 over perceptions of random data multiple times, convincing the operator to output the correct results.
 
-This script may easily be modified to predict test.csv and output the results to a submission file.
+This script may easily be modified to predict test.csv and to output the results to a submission file.
 
 **Training process**
 
