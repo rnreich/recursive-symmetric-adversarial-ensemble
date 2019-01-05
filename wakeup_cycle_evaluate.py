@@ -286,7 +286,7 @@ with open(DATA_FILE, "r") as csvfile:
                 print("successes (latent collections): ", lc_successes[target_synapse])
                 print("overall proven success rate (data): ", success_rate[target_synapse])
                 print("overall proven success rate (latent collections): ", lc_success_rate[target_synapse])
-                print("lowest gate error: ", predictions[target_synapse])
+                print("gate error: ", predictions[target_synapse])
                 print("streak: ", streak[target_synapse], " (odds = " + str(streak_odds) + ")")
                 print("beststreak: ", beststreak[target_synapse], " (odds = " + str(beststreak_odds) + ")")
                 print("intelligence signal: ", intelligence_signal)
