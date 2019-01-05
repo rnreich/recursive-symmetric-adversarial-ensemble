@@ -293,7 +293,7 @@ while True:
                 print("successes (latent collections): ", lc_successes)
                 print("overall proven success rate (data): ", success_rate)
                 print("overall proven success rate (latent collections): ", lc_success_rate)
-                print("lowest gate error: ", predictions[target_synapse])
+                print("highest gate error: ", predictions[target_synapse])
                 print("streak: ", streak, " (odds = " + str(streak_odds) + ")")
                 print("beststreak: ", beststreak, " (odds = " + str(beststreak_odds) + ")")
                 print("intelligence signal: ", intelligence_signal)
