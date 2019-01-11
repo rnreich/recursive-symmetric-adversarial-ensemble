@@ -1,4 +1,4 @@
-## IntelliForge - Recursive-symmetric adversarial ensemble learning ##
+## Recursive-symmetric adversarial ensemble learning ##
 ### Indirect high-resolution neural fitting, scalable neural structure operating on raw data ###
 
 An assembly of neural networks training together to optimize under a negotiator that fails them deliberately
